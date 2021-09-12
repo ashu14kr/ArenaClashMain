@@ -2,6 +2,7 @@ import 'package:arenaclash/Screens/drawer/drawer_helper.dart';
 import 'package:arenaclash/Screens/homeScreen/home_helper.dart';
 import 'package:arenaclash/Screens/registrationScreen/registration_helper.dart';
 import 'package:arenaclash/Screens/splashScreen/splash_screen.dart';
+import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/badmintonChallenge/badminton_helper.dart';
 import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/footballChallenge/football_helper.dart';
 import 'package:arenaclash/Screens/walletScreen/wallet_helper.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => DrawerHelper()),
           ChangeNotifierProvider(create: (_) => WalletHelper()),
           ChangeNotifierProvider(create: (_) => FootballHelper()),
+          ChangeNotifierProvider(create: (_) => BadmintonHelper()),
         ],
     );
   }
