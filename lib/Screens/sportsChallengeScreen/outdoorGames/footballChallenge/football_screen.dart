@@ -24,7 +24,9 @@ class _FootballScreenState extends State<FootballScreen> {
       child: Scaffold(
         backgroundColor: constantColors.mainColor,
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {},
+          onPressed: () {
+            Provider.of<FootballHelper>(context, listen: false).createChallenge(context);
+          },
           label: const Icon(EvaIcons.plus),
           backgroundColor: Colors.red,
         ),
