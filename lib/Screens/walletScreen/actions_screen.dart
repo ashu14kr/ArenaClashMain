@@ -1,4 +1,6 @@
+import 'package:arenaclash/Screens/walletScreen/wallet_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ActionsScreen extends StatefulWidget {
   const ActionsScreen({ Key? key }) : super(key: key);
@@ -14,13 +16,14 @@ class _ActionsScreenState extends State<ActionsScreen> {
       backgroundColor: Colors.transparent,
       body: Column(
         children: [
-          const SizedBox(height: 8),
+          const SizedBox(height: 15),
           Container(
-            height: MediaQuery.of(context).size.height*0.08,
+            height: MediaQuery.of(context).size.height*0.2,
             width: MediaQuery.of(context).size.width,
-            color: Colors.white,
+            color: Colors.transparent,
             child: Row(
-              children: const [
+              children: [
+                Provider.of<WalletHelper>(context, listen: false).actions(context),
               ],
             ),
           )

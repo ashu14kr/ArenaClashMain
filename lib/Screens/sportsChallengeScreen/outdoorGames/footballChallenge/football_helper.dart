@@ -55,16 +55,73 @@ class FootballHelper with ChangeNotifier {
           )
         ),
         child: Column(
-          children: const [
-            SizedBox(height: 5),
-            Padding(
+          children:  [
+            const SizedBox(height: 5),
+            const Padding(
               padding: EdgeInsets.symmetric(horizontal: 150,),
               child: Divider(
                 thickness: 2,
                 color: Colors.red,
               ),
             ),
-            Text("Add Challenge", style: TextStyle(color: Colors.green, fontSize: 20))
+            const SizedBox(height: 5,),
+            const Text("Add Challenge", style: TextStyle(color: Colors.white, fontSize: 20)),
+            const SizedBox(height: 35),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: TextField(
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                        hintText: "Enter Random ID",
+                        prefixIcon: Icon(Icons.games_rounded, color: Colors.white),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                          )
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                          )
+                        ),
+                        hintStyle: TextStyle(
+                            color: Colors.grey,)),
+                    cursorColor: Colors.white,
+                  ),
+            ),
+            const SizedBox(height: 10),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: TextField(
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                        hintText: "Coins",
+                        prefixIcon: Icon(Icons.account_balance_wallet_outlined, color: Colors.white),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                          )
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                          )
+                        ),
+                        hintStyle: TextStyle(
+                            color: Colors.grey,)),
+                    cursorColor: Colors.white,
+                  ),
+            ),
+            const SizedBox(height: 35,),
+            Container(
+              height: 45,
+              width: 200,
+              decoration: BoxDecoration(
+                color: Colors.green,
+                borderRadius: BorderRadius.circular(25)
+              ),
+              child: const Center(child: Text("Create Challenge", style: TextStyle(color: Colors.white, fontSize: 16))),
+            )
           ],
         ),
       );
