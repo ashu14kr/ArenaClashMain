@@ -1,4 +1,5 @@
 import 'package:arenaclash/Constantcolors.dart';
+import 'package:arenaclash/Screens/homeScreen/online_games.dart';
 import 'package:arenaclash/Screens/homeScreen/outdoorsports.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
@@ -82,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: const TabBarView(
                             children: [
                               OutdoorSports(),
-                              OutdoorSports(),
+                              OnlineGames(),
                             ]),
                         ),
                       ),

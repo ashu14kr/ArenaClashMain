@@ -1,4 +1,6 @@
+import 'package:arenaclash/Screens/registrationScreen/otpScreen/otp.dart';
 import 'package:arenaclash/Screens/registrationScreen/registration_helper.dart';
+import 'package:arenaclash/Services/phone_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +19,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            Provider.of<PhoneAuth>(context, listen: false).codesend ? const OtpScreen():
             const SizedBox(height: 60),
             Provider.of<RegistrationHelper>(context, listen: false).header(context),
             const SizedBox(height: 60),

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "410651379554",
+    "project_id": "arenaclash-db328",
+    "storage_bucket": "arenaclash-db328.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:410651379554:android:ad595a284a33f6d11f4e3b",
+        "android_client_info": {
+          "package_name": "com.example.arenaclash"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "410651379554-uqknstdnurjerit8h5efgmq9qqbfra5u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.arenaclash",
+            "certificate_hash": "fb01d2b1865396d8ea25f0fb08d78d392521d0ad"
+          }
+        },
+        {
+          "client_id": "410651379554-b4uo1csf8k2lmu2evmd9dfpkodp35r4n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsrhXt77sLMQa0xQey-xCoIiEOFqaBNrg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "410651379554-b4uo1csf8k2lmu2evmd9dfpkodp35r4n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,9 +1,13 @@
 import 'package:arenaclash/Screens/loginScreen/login_helper.dart';
+import 'package:arenaclash/Screens/registrationScreen/otpScreen/otp.dart';
+import 'package:arenaclash/Services/phone_auth.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 class RegistrationHelper with ChangeNotifier {
+  TextEditingController userNumber = TextEditingController();
   Widget header(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -188,7 +192,10 @@ class RegistrationHelper with ChangeNotifier {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: TextField(
+                    controller: userNumber,
                     style: const TextStyle(color: Colors.white),
+                    maxLength: 10,
+                    keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: "eg. 6666666666",
@@ -246,7 +253,15 @@ class RegistrationHelper with ChangeNotifier {
       child: Column(
         children: [
           InkWell(
-            onTap: () {},
+            onTap: () {
+              Provider.of<PhoneAuth>(context, listen: false)
+                  .verifyPhone(context);
+              Navigator.pushReplacement(
+                  context,
+                  PageTransition(
+                      child: const OtpScreen(),
+                      type: PageTransitionType.leftToRight));
+            },
             child: Container(
               height: MediaQuery.of(context).size.height * 0.07,
               width: MediaQuery.of(context).size.width,

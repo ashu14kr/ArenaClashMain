@@ -1,6 +1,8 @@
 import 'package:arenaclash/Constantcolors.dart';
 import 'package:arenaclash/Screens/drawer/home_drawer.dart';
+import 'package:arenaclash/Screens/walletScreen/about_screen.dart';
 import 'package:arenaclash/Screens/walletScreen/actions_screen.dart';
+import 'package:arenaclash/Screens/walletScreen/history_screen.dart';
 import 'package:arenaclash/Screens/walletScreen/wallet_helper.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
@@ -58,8 +60,8 @@ class _WalletScreenState extends State<WalletScreen> {
               width: MediaQuery.of(context).size.width,
               child: const TabBarView(children: [
                 ActionsScreen(),
-                ActionsScreen(),
-                ActionsScreen(),
+                HistoryScreen(),
+                AboutScreen(),
               ]),
             )
           ],
