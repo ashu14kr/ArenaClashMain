@@ -6,6 +6,7 @@ import 'package:arenaclash/Screens/sportsChallengeScreen/onlineGames/freefireCha
 import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/badmintonChallenge/badminton_helper.dart';
 import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/footballChallenge/football_helper.dart';
 import 'package:arenaclash/Screens/walletScreen/wallet_helper.dart';
+import 'package:arenaclash/Services/add_user_login.dart';
 import 'package:arenaclash/Services/phone_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => BadmintonHelper()),
           ChangeNotifierProvider(create: (_) => FreefireHelper()),
           ChangeNotifierProvider(create: (_) => PhoneAuth()),
+          ChangeNotifierProvider(create: (_) => AddUserData()),
         ],
     );
   }
