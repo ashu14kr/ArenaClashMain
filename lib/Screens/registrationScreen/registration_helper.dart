@@ -8,6 +8,9 @@ import 'package:provider/provider.dart';
 
 class RegistrationHelper with ChangeNotifier {
   TextEditingController userNumber = TextEditingController();
+  TextEditingController userName = TextEditingController();
+  TextEditingController userEmail = TextEditingController();
+  TextEditingController userPassword = TextEditingController();
   Widget header(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -122,6 +125,7 @@ class RegistrationHelper with ChangeNotifier {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: TextField(
+                    controller: userName,
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                         border: InputBorder.none,
@@ -157,6 +161,7 @@ class RegistrationHelper with ChangeNotifier {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: TextField(
+                    controller: userEmail,
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                         border: InputBorder.none,
@@ -230,6 +235,7 @@ class RegistrationHelper with ChangeNotifier {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: TextField(
+                    controller: userPassword,
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                         border: InputBorder.none,

@@ -1,4 +1,6 @@
+import 'package:arenaclash/Screens/walletScreen/walletDeposit/paytm_form.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 class WalletHelper with ChangeNotifier {
   Widget header(BuildContext context) {
@@ -18,35 +20,49 @@ class WalletHelper with ChangeNotifier {
 
   Widget actions(BuildContext context) {
     return Container(
-        height: MediaQuery.of(context).size.height*0.2,
+        height: MediaQuery.of(context).size.height * 0.2,
         width: MediaQuery.of(context).size.width,
         color: Colors.transparent,
         child: Column(
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: const [
-                      Icon(
-                        Icons.account_balance_wallet_outlined,
-                        color: Colors.green,
-                        size: 24,
-                      ),
-                      SizedBox(
-                        width: 30,
-                      ),
-                      Text("Deposit",
-                          style: TextStyle(color: Colors.white, fontSize: 16))
-                    ],
-                  ),
-                  const Icon(Icons.arrow_forward_ios_outlined, color: Colors.white,)
-                ],
+              child: InkWell(
+                onTap: () {
+                  Navigator.pushReplacement(
+                      context,
+                      PageTransition(
+                          child: const PaytmForm(),
+                          type: PageTransitionType.leftToRight));
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: const [
+                        Icon(
+                          Icons.account_balance_wallet_outlined,
+                          color: Colors.green,
+                          size: 24,
+                        ),
+                        SizedBox(
+                          width: 30,
+                        ),
+                        Text("Deposit",
+                            style: TextStyle(color: Colors.white, fontSize: 16))
+                      ],
+                    ),
+                    const Icon(
+                      Icons.arrow_forward_ios_outlined,
+                      color: Colors.white,
+                    )
+                  ],
+                ),
               ),
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 35),
               child: Divider(
@@ -74,7 +90,10 @@ class WalletHelper with ChangeNotifier {
                           style: TextStyle(color: Colors.white, fontSize: 16))
                     ],
                   ),
-                  const Icon(Icons.arrow_forward_ios_outlined, color: Colors.white,)
+                  const Icon(
+                    Icons.arrow_forward_ios_outlined,
+                    color: Colors.white,
+                  )
                 ],
               ),
             )
