@@ -20,7 +20,7 @@ class RegistrationHelper with ChangeNotifier {
             height: 40,
             width: 40,
             decoration: BoxDecoration(
-                color: Colors.black,
+                color: Colors.black45,
                 border: Border.all(width: 1, color: Colors.grey.shade800),
                 borderRadius: BorderRadius.circular(8)),
             child: Center(
@@ -67,7 +67,7 @@ class RegistrationHelper with ChangeNotifier {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(width: 1.0, color: Colors.grey.shade800),
-                    color: Colors.black),
+                    color: Colors.black45),
                 child: Center(
                     child: IconButton(
                         onPressed: () {},
@@ -82,7 +82,7 @@ class RegistrationHelper with ChangeNotifier {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(width: 1.0, color: Colors.grey.shade800),
-                    color: Colors.black),
+                    color: Colors.black45),
                 child: Center(
                     child: IconButton(
                         onPressed: () {},

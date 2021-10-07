@@ -1,5 +1,7 @@
+import 'package:arenaclash/Screens/settingScreen/setting_screen.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 class DrawerHelper with ChangeNotifier{
 
@@ -29,14 +31,18 @@ class DrawerHelper with ChangeNotifier{
     return Padding(
       padding: const EdgeInsets.only(left: 30),
       child: Row(
-        children: const [
-          Icon(EvaIcons.settings, color: Colors.grey),
-          SizedBox(width: 15),
-          Text("Setting", style: TextStyle(fontSize: 16, color: Colors.grey)),
-          SizedBox(width: 5),
-          Text("|", style: TextStyle(fontSize: 16, color: Colors.grey)),
-          SizedBox(width: 5),
-          Text("LogOut", style: TextStyle(fontSize: 16, color: Colors.grey)),
+        children: [
+          const Icon(EvaIcons.settings, color: Colors.grey),
+          const SizedBox(width: 15),
+          InkWell(
+            onTap: (){
+              Navigator.push(context, PageTransition(child: const SettingScreen(),type: PageTransitionType.leftToRight));
+            },
+            child: const Text("Setting", style: TextStyle(fontSize: 16, color: Colors.grey))),
+          const SizedBox(width: 5),
+          const Text("|", style: TextStyle(fontSize: 16, color: Colors.grey)),
+          const SizedBox(width: 5),
+          const Text("LogOut", style: TextStyle(fontSize: 16, color: Colors.grey)),
         ],
       ),
     );

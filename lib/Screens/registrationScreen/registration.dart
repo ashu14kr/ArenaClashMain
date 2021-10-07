@@ -1,3 +1,4 @@
+import 'package:arenaclash/Constantcolors.dart';
 import 'package:arenaclash/Screens/registrationScreen/otpScreen/otp.dart';
 import 'package:arenaclash/Screens/registrationScreen/registration_helper.dart';
 import 'package:arenaclash/Services/phone_auth.dart';
@@ -14,8 +15,9 @@ class RegistrationScreen extends StatefulWidget {
 class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
+    ConstantColors constantColors = ConstantColors();
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: constantColors.mainColor,
       body: SingleChildScrollView(
         child: Column(
           children: [

@@ -1,3 +1,4 @@
+import 'package:arenaclash/Constantcolors.dart';
 import 'package:arenaclash/Screens/loginScreen/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,8 +13,9 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
+    ConstantColors constantColors = ConstantColors();
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: constantColors.mainColor,
       body: SingleChildScrollView(
         child: Column(
           children: [

@@ -29,7 +29,7 @@ class WalletHelper with ChangeNotifier {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: InkWell(
                 onTap: () {
-                  Navigator.pushReplacement(
+                  Navigator.push(
                       context,
                       PageTransition(
                           child: const PaytmForm(),

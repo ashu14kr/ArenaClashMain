@@ -21,7 +21,7 @@ class _OnlineGamesState extends State<OnlineGames> {
             children: [
               InkWell(
                 onTap: () {
-                  Navigator.pushReplacement(
+                  Navigator.push(
                       context,
                       PageTransition(
                           child: const FreefireChallenge(),

@@ -1,3 +1,4 @@
+import 'package:arenaclash/Constantcolors.dart';
 import 'package:arenaclash/Screens/registrationScreen/registration_helper.dart';
 import 'package:arenaclash/Services/phone_auth.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
@@ -15,8 +16,9 @@ class OtpScreen extends StatefulWidget {
 class _OtpScreenState extends State<OtpScreen> {
   @override
   Widget build(BuildContext context) {
+    ConstantColors constantColors = ConstantColors();
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: constantColors.mainColor,
       appBar: AppBar(
         title:
             const Text("Verify Phone", style: TextStyle(color: Colors.white)),

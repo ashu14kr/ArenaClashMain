@@ -1,3 +1,4 @@
+import 'package:arenaclash/Constantcolors.dart';
 import 'package:arenaclash/Screens/drawer/home_drawer.dart';
 import 'package:arenaclash/Screens/registrationScreen/registration.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
 class LoginHelper with ChangeNotifier {
+  ConstantColors constantColors = ConstantColors();
   Widget header(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -14,7 +16,7 @@ class LoginHelper with ChangeNotifier {
             height: 40,
             width: 40,
             decoration: BoxDecoration(
-                color: Colors.black,
+                color: Colors.black45,
                 border: Border.all(width: 1, color: Colors.grey.shade800),
                 borderRadius: BorderRadius.circular(8)),
             child: Center(
@@ -61,7 +63,7 @@ class LoginHelper with ChangeNotifier {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(width: 1.0, color: Colors.grey.shade800),
-                    color: Colors.black),
+                    color: Colors.black45),
                 child: Center(
                     child: IconButton(
                         onPressed: () {},
@@ -76,7 +78,7 @@ class LoginHelper with ChangeNotifier {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(width: 1.0, color: Colors.grey.shade800),
-                    color: Colors.black),
+                    color: Colors.black45),
                 child: Center(
                     child: IconButton(
                         onPressed: () {},

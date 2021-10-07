@@ -1,7 +1,9 @@
 import 'package:arenaclash/Constantcolors.dart';
 import 'package:arenaclash/Screens/drawer/drawer_helper.dart';
 import 'package:arenaclash/Screens/drawer/home_drawer.dart';
+import 'package:arenaclash/Screens/helpScreen/help_screen.dart';
 import 'package:arenaclash/Screens/notificationScreen/notification_screen.dart';
+import 'package:arenaclash/Screens/walletScreen/history_drawer.dart';
 import 'package:arenaclash/Screens/walletScreen/wallet_screen.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
@@ -41,8 +43,10 @@ class _DrawerScreenState extends State<DrawerScreen> {
   final pages = [
     const HomeAndDrawer(),
     const NotificationScreen(),
-    const Drawer(),
+    const HistoryDrawer(),
     const WalletScreen(),
+    const Drawer(),
+    const HelpScreen(),
   ];
 
   @override
@@ -90,7 +94,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
               onTap: () {
                 setState(() {
                   selectedMenuIndex = index;
-                  Navigator.pushReplacement(
+                  Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (BuildContext context) => pages[index]));

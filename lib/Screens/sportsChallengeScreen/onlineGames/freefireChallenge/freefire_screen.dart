@@ -1,10 +1,8 @@
 import 'package:arenaclash/Constantcolors.dart';
-import 'package:arenaclash/Screens/drawer/home_drawer.dart';
 import 'package:arenaclash/Screens/sportsChallengeScreen/onlineGames/freefireChallenge/freefire_helper.dart';
 import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/badmintonChallenge/live_challenges.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 class FreefireChallenge extends StatefulWidget {
@@ -34,15 +32,6 @@ class _FreefireChallengeState extends State<FreefireChallenge> {
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           centerTitle: true,
-          leading: IconButton(
-              onPressed: () {
-                Navigator.pushReplacement(
-                    context,
-                    PageTransition(
-                        child: const HomeAndDrawer(),
-                        type: PageTransitionType.leftToRight));
-              },
-              icon: const Icon(EvaIcons.arrowIosBack)),
         ),
         body: SingleChildScrollView(
           child: Column(

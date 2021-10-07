@@ -22,7 +22,7 @@ class _OutdoorSportsState extends State<OutdoorSports> {
             children: [
               InkWell(
                 onTap: () {
-                  Navigator.pushReplacement(
+                  Navigator.push(
                       context,
                       PageTransition(
                           child: const FootballScreen(),
@@ -39,7 +39,7 @@ class _OutdoorSportsState extends State<OutdoorSports> {
               ),
               InkWell(
                 onTap: () {
-                  Navigator.pushReplacement(
+                  Navigator.push(
                       context,
                       PageTransition(
                           child: const BadmintonScreen(),

@@ -1,4 +1,5 @@
 import 'package:arenaclash/Screens/drawer/drawer_helper.dart';
+import 'package:arenaclash/Screens/helpScreen/help_helper.dart';
 import 'package:arenaclash/Screens/homeScreen/home_helper.dart';
 import 'package:arenaclash/Screens/registrationScreen/registration_helper.dart';
 import 'package:arenaclash/Screens/splashScreen/splash_screen.dart';
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => FreefireHelper()),
           ChangeNotifierProvider(create: (_) => PhoneAuth()),
           ChangeNotifierProvider(create: (_) => AddUserData()),
+          ChangeNotifierProvider(create: (_) => HelpHelper()),
         ],
     );
   }

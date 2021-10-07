@@ -1,7 +1,5 @@
 import 'package:arenaclash/Constantcolors.dart';
-import 'package:arenaclash/Screens/drawer/home_drawer.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({Key? key}) : super(key: key);
@@ -21,15 +19,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
         centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0.0,
-        leading: IconButton(
-            onPressed: () {
-              Navigator.pushReplacement(
-                  context,
-                  PageTransition(
-                      child: const HomeAndDrawer(),
-                      type: PageTransitionType.rightToLeft));
-            },
-            icon: const Icon(Icons.arrow_back_ios)),
       ),
     );
   }

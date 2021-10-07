@@ -69,15 +69,6 @@ class _PaytmFormState extends State<PaytmForm> {
       backgroundColor: constantColors.mainColor,
       appBar: AppBar(
         title: const Text("New Deposit"),
-        leading: IconButton(
-            onPressed: () {
-              Navigator.pushReplacement(
-                  context,
-                  PageTransition(
-                      child: const WalletScreen(),
-                      type: PageTransitionType.leftToRight));
-            },
-            icon: const Icon(Icons.arrow_back)),
         backgroundColor: constantColors.mainColor,
         elevation: 0.0,
       ),

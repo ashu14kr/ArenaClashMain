@@ -1,12 +1,9 @@
 import 'package:arenaclash/Constantcolors.dart';
-import 'package:arenaclash/Screens/drawer/home_drawer.dart';
 import 'package:arenaclash/Screens/walletScreen/about_screen.dart';
 import 'package:arenaclash/Screens/walletScreen/actions_screen.dart';
 import 'package:arenaclash/Screens/walletScreen/history_screen.dart';
 import 'package:arenaclash/Screens/walletScreen/wallet_helper.dart';
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 class WalletScreen extends StatefulWidget {
@@ -31,16 +28,7 @@ class _WalletScreenState extends State<WalletScreen> {
                     color: Colors.white, fontWeight: FontWeight.bold)),
             centerTitle: true,
             backgroundColor: Colors.transparent,
-            elevation: 0.0,
-            leading: IconButton(
-                onPressed: () {
-                  Navigator.pushReplacement(
-                      context,
-                      PageTransition(
-                          type: PageTransitionType.rightToLeft,
-                          child: const HomeAndDrawer()));
-                },
-                icon: const Icon(EvaIcons.arrowIosBackOutline))),
+            elevation: 0.0),
         body: Column(
           children: [
             Provider.of<WalletHelper>(context, listen: false).header(context),
