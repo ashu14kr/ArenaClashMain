@@ -1,19 +1,8 @@
 import 'package:arenaclash/Constantcolors.dart';
-import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/badmintonChallenge/badminton_screen.dart';
-import 'package:arenaclash/Services/tournamentApi/post_badminton_contest.dart';
-import 'package:arenaclash/Services/userApi/get_user_data.dart';
-import 'package:arenaclash/Services/walletApi/get_current_balance.dart';
-import 'package:arenaclash/Services/walletApi/update_balance.dart';
-import 'package:arenaclash/modals/current_balance.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
-import 'package:provider/provider.dart';
 
-class BadmintonHelper with ChangeNotifier {
-  TextEditingController dualPoint = TextEditingController();
-  TextEditingController dualcoins = TextEditingController();
-  var betcoin;
+class CricketHelper with ChangeNotifier {
   Widget upperContainer(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 10),
@@ -23,7 +12,7 @@ class BadmintonHelper with ChangeNotifier {
         decoration: const BoxDecoration(color: Colors.transparent),
         child: Column(
           children: const [
-            Text("Badminton Challenge",
+            Text("Cricket Challenge",
                 style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -94,7 +83,7 @@ class BadmintonHelper with ChangeNotifier {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text("1.  Dual player match",
+                      const Text("1.  OnePlayer vs OnePlayer",
                           style: TextStyle(color: Colors.white)),
                       IconButton(
                           onPressed: () {
@@ -110,11 +99,11 @@ class BadmintonHelper with ChangeNotifier {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text("2.  Single player match",
+                      const Text("2.  Team vs Team",
                           style: TextStyle(color: Colors.white)),
                       IconButton(
                           onPressed: () {
-                            // teamVsTeamChallenges(context);
+                            teamVsTeamChallenges(context);
                           },
                           icon: const Icon(EvaIcons.checkmarkCircle,
                               color: Colors.red))
@@ -129,16 +118,13 @@ class BadmintonHelper with ChangeNotifier {
 
   Future oneOnOneChallenge(BuildContext context) {
     ConstantColors constantColors = ConstantColors();
-    var currentBalance = Provider.of<GetCurrentBalance>(context, listen: false);
-    var updateBalance = Provider.of<UpdateBalance>(context, listen: false);
     return showModalBottomSheet(
         context: context,
         backgroundColor: Colors.transparent,
         isScrollControlled: true,
         builder: (BuildContext context) {
           return Padding(
-            padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom),
+            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
             child: Container(
               height: MediaQuery.of(context).size.height * 0.4,
               width: MediaQuery.of(context).size.width,
@@ -171,14 +157,13 @@ class BadmintonHelper with ChangeNotifier {
                         color: Colors.grey,
                       )),
                   const SizedBox(height: 15),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 15),
                     child: TextField(
-                      style: const TextStyle(color: Colors.white),
-                      controller: dualPoint,
-                      decoration: const InputDecoration(
-                          hintText: "Total Points",
-                          prefixIcon: Icon(Icons.sports_tennis_rounded,
+                      style: TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                          hintText: "Total Overs",
+                          prefixIcon: Icon(Icons.sports_cricket,
                               color: Colors.white),
                           focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
@@ -195,15 +180,13 @@ class BadmintonHelper with ChangeNotifier {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 15),
                     child: TextField(
-                      style: const TextStyle(color: Colors.white),
-                      controller: dualcoins,
-                      decoration: const InputDecoration(
+                      style: TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
                           hintText: "Coins",
-                          prefixIcon: Icon(
-                              Icons.account_balance_wallet_outlined,
+                          prefixIcon: Icon(Icons.account_balance_wallet_outlined,
                               color: Colors.white),
                           focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
@@ -220,42 +203,15 @@ class BadmintonHelper with ChangeNotifier {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  InkWell(
-                    onTap: () {
-                      Provider.of<GetCurrentBalance>(context, listen: false)
-                          .getCurrentBalance();
-                      Provider.of<GetUserData>(context, listen: false)
-                          .getUserData()
-                          .whenComplete(() => {
-                            betcoin = num.parse(dualcoins.text),
-                            if (currentBalance.amount >= betcoin) {
-                              Provider.of<PostBadmintonContest>(context, listen: false).postdualteamtournament(context),
-                              Provider.of<UpdateBalance>(context, listen: false).updateCurrentBalance(context),
-                            }else{
-                              print("balance is less"),
-                              // throw Exception("balance is less")
-                            }
-                              })
-                          .whenComplete(() => {
-                                Navigator.pushReplacement(
-                                    context,
-                                    PageTransition(
-                                        child: const BadmintonScreen(),
-                                        type: PageTransitionType.leftToRight))
-                              });
-                    },
-                    child: Container(
-                      height: 45,
-                      width: 200,
-                      decoration: BoxDecoration(
-                          color: Colors.green,
-                          borderRadius: BorderRadius.circular(25)),
-                      child: const Center(
-                          child: Text("Create Challenge",
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: 16))),
-                    ),
-                  )
+                  Container(
+                height: 45,
+                width: 200,
+                decoration: BoxDecoration(
+                  color: Colors.green,
+                  borderRadius: BorderRadius.circular(25)
+                ),
+                child: const Center(child: Text("Create Challenge", style: TextStyle(color: Colors.white, fontSize: 16))),
+              )
                 ],
               ),
             ),
@@ -271,8 +227,7 @@ class BadmintonHelper with ChangeNotifier {
         isScrollControlled: true,
         builder: (BuildContext context) {
           return Padding(
-            padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom),
+            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
             child: Container(
               height: MediaQuery.of(context).size.height * 0.5,
               width: MediaQuery.of(context).size.width,
@@ -311,8 +266,8 @@ class BadmintonHelper with ChangeNotifier {
                       style: TextStyle(color: Colors.white),
                       decoration: InputDecoration(
                           hintText: "Total Overs",
-                          prefixIcon:
-                              Icon(Icons.sports_cricket, color: Colors.white),
+                          prefixIcon: Icon(Icons.sports_cricket,
+                              color: Colors.white),
                           focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
                             color: Colors.white,
@@ -334,7 +289,8 @@ class BadmintonHelper with ChangeNotifier {
                       style: TextStyle(color: Colors.white),
                       decoration: InputDecoration(
                           hintText: "Total Players",
-                          prefixIcon: Icon(Icons.person, color: Colors.white),
+                          prefixIcon: Icon(Icons.person,
+                              color: Colors.white),
                           focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
                             color: Colors.white,
@@ -349,17 +305,14 @@ class BadmintonHelper with ChangeNotifier {
                       cursorColor: Colors.white,
                     ),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  const SizedBox(height: 10,),
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 15),
                     child: TextField(
                       style: TextStyle(color: Colors.white),
                       decoration: InputDecoration(
                           hintText: "Coins",
-                          prefixIcon: Icon(
-                              Icons.account_balance_wallet_outlined,
+                          prefixIcon: Icon(Icons.account_balance_wallet_outlined,
                               color: Colors.white),
                           focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
@@ -377,16 +330,14 @@ class BadmintonHelper with ChangeNotifier {
                   ),
                   const SizedBox(height: 20),
                   Container(
-                    height: 45,
-                    width: 200,
-                    decoration: BoxDecoration(
-                        color: Colors.green,
-                        borderRadius: BorderRadius.circular(25)),
-                    child: const Center(
-                        child: Text("Create Challenge",
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 16))),
-                  )
+                height: 45,
+                width: 200,
+                decoration: BoxDecoration(
+                  color: Colors.green,
+                  borderRadius: BorderRadius.circular(25)
+                ),
+                child: const Center(child: Text("Create Challenge", style: TextStyle(color: Colors.white, fontSize: 16))),
+              )
                 ],
               ),
             ),
@@ -482,8 +433,7 @@ class BadmintonHelper with ChangeNotifier {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [
                       Text('Created By', style: TextStyle(color: Colors.grey)),
-                      Text('Ashutosh kumar',
-                          style: TextStyle(color: Colors.white))
+                      Text('Ashutosh kumar', style: TextStyle(color: Colors.white))
                     ],
                   ),
                 ),
@@ -501,8 +451,7 @@ class BadmintonHelper with ChangeNotifier {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [
-                      Text('Contact Details',
-                          style: TextStyle(color: Colors.grey)),
+                      Text('Contact Details', style: TextStyle(color: Colors.grey)),
                       Text('8789553987', style: TextStyle(color: Colors.white))
                     ],
                   ),
@@ -521,10 +470,8 @@ class BadmintonHelper with ChangeNotifier {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [
-                      Text('Contest Created',
-                          style: TextStyle(color: Colors.grey)),
-                      Text('Oct 30,2021 9:15 PM',
-                          style: TextStyle(color: Colors.white))
+                      Text('Contest Created', style: TextStyle(color: Colors.grey)),
+                      Text('Oct 30,2021 9:15 PM', style: TextStyle(color: Colors.white))
                     ],
                   ),
                 ),
@@ -538,15 +485,14 @@ class BadmintonHelper with ChangeNotifier {
                 ),
                 const SizedBox(height: 30),
                 Container(
-                  height: 45,
-                  width: 200,
-                  decoration: BoxDecoration(
-                      color: Colors.green,
-                      borderRadius: BorderRadius.circular(25)),
-                  child: const Center(
-                      child: Text("Confirm",
-                          style: TextStyle(color: Colors.white, fontSize: 16))),
-                )
+                height: 45,
+                width: 200,
+                decoration: BoxDecoration(
+                  color: Colors.green,
+                  borderRadius: BorderRadius.circular(25)
+                ),
+                child: const Center(child: Text("Confirm", style: TextStyle(color: Colors.white, fontSize: 16))),
+              )
               ],
             ),
           );
@@ -641,8 +587,7 @@ class BadmintonHelper with ChangeNotifier {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [
                       Text('Created By', style: TextStyle(color: Colors.grey)),
-                      Text('Ashutosh kumar',
-                          style: TextStyle(color: Colors.white))
+                      Text('Ashutosh kumar', style: TextStyle(color: Colors.white))
                     ],
                   ),
                 ),
@@ -660,8 +605,7 @@ class BadmintonHelper with ChangeNotifier {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [
-                      Text('Contact Details',
-                          style: TextStyle(color: Colors.grey)),
+                      Text('Contact Details', style: TextStyle(color: Colors.grey)),
                       Text('8789553987', style: TextStyle(color: Colors.white))
                     ],
                   ),
@@ -680,10 +624,8 @@ class BadmintonHelper with ChangeNotifier {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [
-                      Text('Contest Created',
-                          style: TextStyle(color: Colors.grey)),
-                      Text('Oct 30,2021 9:15 PM',
-                          style: TextStyle(color: Colors.white))
+                      Text('Contest Created', style: TextStyle(color: Colors.grey)),
+                      Text('Oct 30,2021 9:15 PM', style: TextStyle(color: Colors.white))
                     ],
                   ),
                 ),
@@ -694,7 +636,7 @@ class BadmintonHelper with ChangeNotifier {
                     thickness: 0.5,
                     color: Colors.grey,
                   ),
-                ),
+                ),                
               ],
             ),
           );

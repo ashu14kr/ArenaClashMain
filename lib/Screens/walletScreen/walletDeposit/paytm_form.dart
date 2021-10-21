@@ -1,7 +1,11 @@
 import 'package:arenaclash/Constantcolors.dart';
 import 'package:arenaclash/Screens/walletScreen/wallet_screen.dart';
+import 'package:arenaclash/Services/walletApi/get_current_balance.dart';
+import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class PaytmForm extends StatefulWidget {
@@ -15,6 +19,7 @@ class _PaytmFormState extends State<PaytmForm> {
   ConstantColors constantColors = ConstantColors();
   TextEditingController amount = TextEditingController();
   late Razorpay _razorpay;
+  var paymentid;
 
   @override
   void initState() {
@@ -48,6 +53,10 @@ class _PaytmFormState extends State<PaytmForm> {
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
     print(
         "Payment success ${response.orderId}, ${response.paymentId}, ${response.signature}");
+        paymentid = response.paymentId;
+        postTransactionHistory(context);
+        updateCurrentBalance(context);
+
     Navigator.pushReplacement(
         context,
         PageTransition(
@@ -209,5 +218,40 @@ class _PaytmFormState extends State<PaytmForm> {
         ),
       ),
     );
+  }
+
+  Future postTransactionHistory(BuildContext context)async{
+    Response responsehttp;
+    var dio = Dio();
+    try {
+      responsehttp = await dio.post("http://34.93.18.143/user/payment/wallethistory/id/lpjkhy", data: {
+      "user": FirebaseAuth.instance.currentUser!.uid.toString(),
+      "status": "completed",
+      "requestId": paymentid,
+      "senderName": "Ashutosh Kumar",
+      "paymentCreated": "",
+      "processedOn": "",
+      "amount": amount.text
+    });
+    print(responsehttp.data);
+    print(responsehttp.statusCode);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future updateCurrentBalance(BuildContext context) async {
+    var currentAmount = Provider.of<GetCurrentBalance>(context, listen: false).amount;
+    num updatedBalance = num.parse(amount.text) + currentAmount;
+    Response response;
+    var dio = Dio();
+    var currentuid = FirebaseAuth.instance.currentUser!.uid.toString();
+    try {
+      response = await dio.patch("http://34.93.18.143/walletBalance/user/updated/$currentuid", data: {
+        "amount": updatedBalance
+      });
+    } catch (e) {
+      print(e);
+    }
   }
 }

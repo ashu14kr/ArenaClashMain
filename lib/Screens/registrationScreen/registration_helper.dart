@@ -1,6 +1,7 @@
 import 'package:arenaclash/Screens/loginScreen/login_helper.dart';
-import 'package:arenaclash/Screens/registrationScreen/otpScreen/otp.dart';
-import 'package:arenaclash/Services/phone_auth.dart';
+import 'package:arenaclash/Services/Auth/emailandpass_auth.dart';
+import 'package:arenaclash/Services/userApi/add_user_login.dart';
+import 'package:arenaclash/Services/walletApi/post_initial_balance.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -10,7 +11,15 @@ class RegistrationHelper with ChangeNotifier {
   TextEditingController userNumber = TextEditingController();
   TextEditingController userName = TextEditingController();
   TextEditingController userEmail = TextEditingController();
-  TextEditingController userPassword = TextEditingController();
+  TextEditingController userPassword = TextEditingController();  
+  bool namevalidate = false;
+  bool emailvalidate = false;
+  bool phonevalidate = false;
+  bool passvalidate = false;
+  bool nameerror = false;
+  bool emailerror = false;
+  bool phoneerror = false;
+  bool passerror = false;
   Widget header(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -129,6 +138,9 @@ class RegistrationHelper with ChangeNotifier {
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                         border: InputBorder.none,
+                        icon: namevalidate
+                            ? const Icon(Icons.error, color: Colors.red)
+                            : null,
                         hintText: "Enter your name",
                         hintStyle: TextStyle(
                             color: Colors.grey.shade800, fontSize: 12)),
@@ -165,6 +177,9 @@ class RegistrationHelper with ChangeNotifier {
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                         border: InputBorder.none,
+                        icon: emailvalidate
+                            ? const Icon(Icons.error, color: Colors.red)
+                            : null,
                         hintText: "example@gmail.com",
                         hintStyle: TextStyle(
                             color: Colors.grey.shade800, fontSize: 12)),
@@ -203,6 +218,9 @@ class RegistrationHelper with ChangeNotifier {
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                         border: InputBorder.none,
+                        icon: phonevalidate
+                            ? const Icon(Icons.error, color: Colors.red)
+                            : null,
                         hintText: "eg. 6666666666",
                         hintStyle: TextStyle(
                             color: Colors.grey.shade800, fontSize: 12)),
@@ -239,6 +257,9 @@ class RegistrationHelper with ChangeNotifier {
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                         border: InputBorder.none,
+                        icon: passvalidate
+                            ? const Icon(Icons.error, color: Colors.red)
+                            : null,
                         hintText: "Pick a strong password",
                         hintStyle: TextStyle(
                             color: Colors.grey.shade800, fontSize: 12)),
@@ -259,14 +280,22 @@ class RegistrationHelper with ChangeNotifier {
       child: Column(
         children: [
           InkWell(
-            onTap: () {
-              Provider.of<PhoneAuth>(context, listen: false)
-                  .verifyPhone(context);
-              Navigator.pushReplacement(
-                  context,
-                  PageTransition(
-                      child: const OtpScreen(),
-                      type: PageTransitionType.leftToRight));
+            onTap: () {            
+                userName.text.isEmpty ? namevalidate = true : false;
+                userEmail.text.isEmpty ? emailvalidate = true : false;
+                userNumber.text.isEmpty ? phonevalidate = true : false;
+                userPassword.text.isEmpty ? passvalidate = true : false;
+                userName.text.isNotEmpty ? nameerror = true : false;
+                userEmail.text.isNotEmpty ? emailerror = true : false;
+                userNumber.text.isNotEmpty ? phoneerror = true : false;
+                userPassword.text.isNotEmpty ? passerror = true : false;
+                if (nameerror == true && emailerror == true && phoneerror == true && passerror == true) {
+                  Provider.of<EmailAndPass>(context, listen: false).emailAuth(context);
+                }else{
+                  const snackBar =
+                    SnackBar(content: Text("Error plz fill form properly"));
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
             },
             child: Container(
               height: MediaQuery.of(context).size.height * 0.07,

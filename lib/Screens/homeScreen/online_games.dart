@@ -15,7 +15,10 @@ class _OnlineGamesState extends State<OnlineGames> {
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Column(
-        children: [
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: const [
+          /*
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -49,6 +52,8 @@ class _OnlineGamesState extends State<OnlineGames> {
               ),
             ],
           ),
+          */
+          Center(child: Image(image: AssetImage("assets/images/empty.png"))),
         ],
       ),
     );

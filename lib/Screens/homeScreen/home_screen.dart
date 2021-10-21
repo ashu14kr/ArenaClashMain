@@ -1,10 +1,10 @@
 import 'package:arenaclash/Constantcolors.dart';
 import 'package:arenaclash/Screens/homeScreen/online_games.dart';
 import 'package:arenaclash/Screens/homeScreen/outdoorsports.dart';
+import 'package:arenaclash/Services/userApi/get_user_data.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'home_helper.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -42,6 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             yoffset = 0;
                             scaleFactor = 1;
                             isDrawerOpen = false;
+                            Provider.of<GetUserData>(context, listen: false)
+                                .getUserData();
                           });
                         },
                       )
@@ -75,18 +77,17 @@ class _HomeScreenState extends State<HomeScreen> {
                         Tab(text: "Outdoor Games"),
                         Tab(text: "Online Games"),
                       ]),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 15),
-                        child: Container(
-                          height: MediaQuery.of(context).size.height*0.6,
-                          color: Colors.transparent,
-                          child: const TabBarView(
-                            children: [
-                              OutdoorSports(),
-                              OnlineGames(),
-                            ]),
-                        ),
-                      ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 15),
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.6,
+                      color: Colors.transparent,
+                      child: const TabBarView(children: [
+                        OutdoorSports(),
+                        OnlineGames(),
+                      ]),
+                    ),
+                  ),
                 ],
               )),
         ),

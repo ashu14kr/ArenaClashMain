@@ -1,6 +1,6 @@
 import 'package:arenaclash/Constantcolors.dart';
 import 'package:arenaclash/Screens/registrationScreen/registration_helper.dart';
-import 'package:arenaclash/Services/phone_auth.dart';
+import 'package:arenaclash/Services/Auth/phone_auth.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';

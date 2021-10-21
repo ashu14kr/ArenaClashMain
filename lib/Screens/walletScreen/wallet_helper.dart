@@ -1,18 +1,21 @@
 import 'package:arenaclash/Screens/walletScreen/walletDeposit/paytm_form.dart';
+import 'package:arenaclash/Services/walletApi/get_current_balance.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 class WalletHelper with ChangeNotifier {
   Widget header(BuildContext context) {
+    var _amount = Provider.of<GetCurrentBalance>(context, listen: false).amount;
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.1,
       width: MediaQuery.of(context).size.width,
       child: Column(
-        children: const [
-          SizedBox(height: 10),
-          Text("Balance", style: TextStyle(color: Colors.grey)),
-          SizedBox(height: 5),
-          Text("₹0.00", style: TextStyle(color: Colors.white, fontSize: 32))
+        children: [
+          const SizedBox(height: 10),
+          const Text("Balance", style: TextStyle(color: Colors.grey)),
+          const SizedBox(height: 5),
+          Text(_amount.toString()+".00", style: const TextStyle(color: Colors.white, fontSize: 32))
         ],
       ),
     );

@@ -21,8 +21,6 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
             const SizedBox(height: 60),
             Provider.of<LoginHelper>(context, listen: false).header(context),
-            const SizedBox(height: 60),
-            Provider.of<LoginHelper>(context, listen: false).loginOptions(context),
             const SizedBox(height: 80),
             Provider.of<LoginHelper>(context, listen: false).loginInfo(context),
             const SizedBox(height: 50),

@@ -1,24 +1,54 @@
+import 'package:arenaclash/Constantcolors.dart';
+import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/badmintonChallenge/badminton_screen.dart';
+import 'package:arenaclash/Services/tournamentApi/get_live_contest.dart';
+import 'package:arenaclash/Services/walletApi/get_current_balance.dart';
+import 'package:arenaclash/modals/badminton_contest.dart';
+import 'package:dio/dio.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 class BadmintonLiveChallenges extends StatefulWidget {
-  const BadmintonLiveChallenges({ Key? key }) : super(key: key);
+  const BadmintonLiveChallenges({Key? key}) : super(key: key);
 
   @override
-  _BadmintonLiveChallengesState createState() => _BadmintonLiveChallengesState();
+  _BadmintonLiveChallengesState createState() =>
+      _BadmintonLiveChallengesState();
 }
 
 class _BadmintonLiveChallengesState extends State<BadmintonLiveChallenges> {
+  ConstantColors constantColors = ConstantColors();
+  List<BadmintonContestData>? _livestatus;
+  bool? _loading;
+
+  @override
+  void initState() {
+    _loading = true;
+    Provider.of<GetLiveContest>(context, listen: false)
+        .getcontestwithlive()
+        .then((status) => {
+              setState(() {
+                _livestatus = status;
+                _loading = false;
+              }),
+            });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
         backgroundColor: Colors.transparent,
         body: SizedBox(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           child: ListView.builder(
-              itemCount: 8,
+              itemCount: null == _livestatus ? 0 : _livestatus!.length,
               itemBuilder: (context, index) {
+                BadmintonContestData badmintonContestData = _livestatus![index];
                 return Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -43,20 +73,26 @@ class _BadmintonLiveChallengesState extends State<BadmintonLiveChallenges> {
                                     CircleAvatar(
                                       backgroundColor: Colors.blue,
                                     ),
-                                    Text("Salena Gomez",
+                                    Text("Arena Clash",
                                         style: TextStyle(fontSize: 10))
                                   ],
                                 ),
                                 Column(
-                                  children: const [
-                                    Text("FOOTBALL_DGBDWUHN",
-                                        style: TextStyle(
+                                  children: [
+                                    Text(
+                                        "BADMINTON_" +
+                                            badmintonContestData.matchType
+                                                .toString(),
+                                        style: const TextStyle(
                                             color: Colors.red, fontSize: 12)),
-                                    SizedBox(height: 5),
-                                    Text("has challenged for"),
-                                    SizedBox(height: 4),
-                                    Text("100.0 Coins",
-                                        style: TextStyle(
+                                    const SizedBox(height: 5),
+                                    const Text("has challenged for"),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                        badmintonContestData.betCoins
+                                                .toString() +
+                                            ".0 Coins",
+                                        style: const TextStyle(
                                             color: Colors.green, fontSize: 15)),
                                   ],
                                 ),
@@ -87,15 +123,20 @@ class _BadmintonLiveChallengesState extends State<BadmintonLiveChallenges> {
                                 ],
                                 color: Colors.white),
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 10),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
                               child: Row(
                                 children: [
                                   Row(
-                                    children: const [
-                                      Text("Winning:",
+                                    children: [
+                                      const Text("Winning:",
                                           style: TextStyle(color: Colors.grey)),
-                                      Text("180.00",
-                                          style: TextStyle(color: Colors.green))
+                                      Text(
+                                          badmintonContestData.winningCoins
+                                                  .toString() +
+                                              ".00",
+                                          style: const TextStyle(
+                                              color: Colors.green))
                                     ],
                                   ),
                                   const SizedBox(width: 20),
@@ -117,7 +158,334 @@ class _BadmintonLiveChallengesState extends State<BadmintonLiveChallenges> {
                                     color: Colors.grey,
                                   ),
                                   const SizedBox(width: 25),
-                                  Text("Accept", style: TextStyle(color: Colors.blue[800]))
+                                  InkWell(
+                                    onTap: () {
+                                      showModalBottomSheet(
+                                          context: context,
+                                          backgroundColor: Colors.transparent,
+                                          builder: (BuildContext context) {
+                                            return Container(
+                                              height: size.height * 0.6,
+                                              width: size.width,
+                                              decoration: BoxDecoration(
+                                                  color: constantColors
+                                                      .darkColor,
+                                                  borderRadius:
+                                                      const BorderRadius.only(
+                                                          topLeft:
+                                                              Radius.circular(
+                                                                  16),
+                                                          topRight:
+                                                              Radius.circular(
+                                                                  16))),
+                                              child: Column(
+                                                children: [
+                                                  const Padding(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 150),
+                                                    child: Divider(
+                                                      thickness: 2,
+                                                      color: Colors.red,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 25),
+                                                  Padding(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 15),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        const Text('Status',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .grey)),
+                                                        Text(
+                                                            badmintonContestData
+                                                                .status
+                                                                .toString(),
+                                                            style:
+                                                                const TextStyle(
+                                                                    color: Colors
+                                                                        .white))
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 5),
+                                                  const Padding(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 15),
+                                                    child: Divider(
+                                                      thickness: 0.5,
+                                                      color: Colors.grey,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 10),
+                                                  Padding(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 15),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        const Text('Match Type',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .grey)),
+                                                        Text(
+                                                            badmintonContestData
+                                                                .matchType
+                                                                .toString(),
+                                                            style:
+                                                                const TextStyle(
+                                                                    color: Colors
+                                                                        .white))
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 5),
+                                                  const Padding(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 15),
+                                                    child: Divider(
+                                                      thickness: 0.5,
+                                                      color: Colors.grey,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 10),
+                                                  Padding(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 15),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        const Text('Winning',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .grey)),
+                                                        Text(
+                                                            badmintonContestData
+                                                                    .winningCoins
+                                                                    .toString() +
+                                                                '.00 coins',
+                                                            style:
+                                                                const TextStyle(
+                                                                    color: Colors
+                                                                        .white))
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 5),
+                                                  const Padding(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 15),
+                                                    child: Divider(
+                                                      thickness: 0.5,
+                                                      color: Colors.grey,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 10),
+                                                  Padding(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 15),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: const [
+                                                        Text('Created By',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .grey)),
+                                                        Text('Arena Clash',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white))
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 5),
+                                                  const Padding(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 15),
+                                                    child: Divider(
+                                                      thickness: 0.5,
+                                                      color: Colors.grey,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 10),
+                                                  Padding(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 15),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        const Text(
+                                                            'Contact Details',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .grey)),
+                                                        Text(
+                                                            badmintonContestData
+                                                                .userWhoCreatedContactDetail
+                                                                .toString(),
+                                                            style:
+                                                                const TextStyle(
+                                                                    color: Colors
+                                                                        .white))
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 5),
+                                                  const Padding(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 15),
+                                                    child: Divider(
+                                                      thickness: 0.5,
+                                                      color: Colors.grey,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 10),
+                                                  Padding(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 15),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: const [
+                                                        Text('Contest Created',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .grey)),
+                                                        Text(
+                                                            'Oct 30,2021 9:15 PM',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white))
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 5),
+                                                  const Padding(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 15),
+                                                    child: Divider(
+                                                      thickness: 0.5,
+                                                      color: Colors.grey,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 30),
+                                                  InkWell(
+                                                    onTap: () async {
+                                                      Response? response;
+                                                      var dio = Dio();
+                                                      var currentId =
+                                                          FirebaseAuth.instance
+                                                              .currentUser!.uid
+                                                              .toString();
+                                                      var currentBalance = Provider
+                                                          .of<GetCurrentBalance>(
+                                                              context,
+                                                              listen: false);
+                                                      var updateUserBalance =
+                                                          currentBalance
+                                                                  .amount -
+                                                              badmintonContestData
+                                                                  .betCoins;
+                                                      var id =
+                                                          badmintonContestData
+                                                              .id
+                                                              .toString();
+                                                      currentBalance
+                                                          .getCurrentBalance();
+                                                      if (currentBalance
+                                                              .amount >=
+                                                          badmintonContestData
+                                                              .betCoins) {
+                                                        try {
+                                                          response = await dio
+                                                              .patch(
+                                                                  "http://34.93.18.143/walletBalance/user/updated/$currentId",
+                                                                  data: {
+                                                                "amount":
+                                                                    updateUserBalance,
+                                                              }).whenComplete(() async =>{
+                                                          response = await dio
+                                                              .patch(
+                                                                  "http://34.93.18.143/badminton/contest/user/info/status/$id",
+                                                                  data: {
+                                                                "status":
+                                                                    "ongoing",
+                                                                "userUidWhoAccepted":
+                                                                    FirebaseAuth
+                                                                        .instance
+                                                                        .currentUser!
+                                                                        .uid
+                                                                        .toString(),
+                                                                  })
+                                                              }).whenComplete(
+                                                                  () => {
+                                                                        Navigator.pushReplacement(
+                                                                            context,
+                                                                            PageTransition(
+                                                                                child: const BadmintonScreen(),
+                                                                                type: PageTransitionType.leftToRight))
+                                                                      });
+                                                        } catch (e) {
+                                                          print(e);
+                                                        }
+                                                      } else {
+                                                        print(
+                                                            "balance is less");
+                                                      }
+                                                    },
+                                                    child: Container(
+                                                      height: 45,
+                                                      width: 200,
+                                                      decoration: BoxDecoration(
+                                                          color: Colors.green,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      25)),
+                                                      child: const Center(
+                                                          child: Text("Confirm",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize:
+                                                                      16))),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            );
+                                          });
+                                    },
+                                    child: Text("Accept",
+                                        style:
+                                            TextStyle(color: Colors.blue[800])),
+                                  )
                                 ],
                               ),
                             ),

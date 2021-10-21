@@ -1,12 +1,21 @@
 import 'package:arenaclash/Constantcolors.dart';
 import 'package:arenaclash/Screens/drawer/home_drawer.dart';
 import 'package:arenaclash/Screens/registrationScreen/registration.dart';
+import 'package:arenaclash/Services/Auth/emailandpass_auth.dart';
+import 'package:arenaclash/Services/walletApi/get_wallethistory.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 class LoginHelper with ChangeNotifier {
   ConstantColors constantColors = ConstantColors();
+  TextEditingController useremail = TextEditingController();
+  TextEditingController userpass = TextEditingController();
+  bool emailvalidate = false;
+  bool passvalidate = false;
+  bool noerror = false;
+  bool lasterror = false;
   Widget header(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -66,7 +75,9 @@ class LoginHelper with ChangeNotifier {
                     color: Colors.black45),
                 child: Center(
                     child: IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          
+                        },
                         icon: const Icon(
                           EvaIcons.google,
                           color: Colors.white,
@@ -121,9 +132,13 @@ class LoginHelper with ChangeNotifier {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: TextField(
+                    controller: useremail,
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                         border: InputBorder.none,
+                        icon: emailvalidate
+                            ? const Icon(Icons.error, color: Colors.red)
+                            : null,
                         hintText: "example@gmail.com",
                         hintStyle: TextStyle(
                             color: Colors.grey.shade800, fontSize: 12)),
@@ -156,9 +171,13 @@ class LoginHelper with ChangeNotifier {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: TextField(
+                    controller: userpass,
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                         border: InputBorder.none,
+                        icon: passvalidate
+                            ? const Icon(Icons.error, color: Colors.red)
+                            : null,
                         hintText: "Enter your password",
                         hintStyle: TextStyle(
                             color: Colors.grey.shade800, fontSize: 12)),
@@ -180,11 +199,22 @@ class LoginHelper with ChangeNotifier {
         children: [
           InkWell(
             onTap: () {
-              Navigator.pushReplacement(
-                  context,
-                  PageTransition(
-                      child: const HomeAndDrawer(),
-                      type: PageTransitionType.bottomToTop));
+              useremail.text.isEmpty
+                  ? emailvalidate = true
+                  : emailvalidate = false;
+              userpass.text.isEmpty
+                  ? passvalidate = true
+                  : passvalidate = false;
+              userpass.text.isNotEmpty ? noerror = true : noerror = false;
+              useremail.text.isNotEmpty ? lasterror = true : lasterror = false;
+              if (noerror == true && lasterror == true) {
+                Provider.of<EmailAndPass>(context, listen: false)
+                    .emailLogin(context);
+              } else {
+                const snackBar =
+                    SnackBar(content: Text("Error plz fill form properly"));
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              }
             },
             child: Container(
               height: MediaQuery.of(context).size.height * 0.07,
