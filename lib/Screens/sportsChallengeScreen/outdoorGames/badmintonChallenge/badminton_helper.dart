@@ -1,5 +1,6 @@
 import 'package:arenaclash/Constantcolors.dart';
 import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/badmintonChallenge/badminton_screen.dart';
+import 'package:arenaclash/Screens/walletScreen/wallet_screen.dart';
 import 'package:arenaclash/Services/tournamentApi/post_badminton_contest.dart';
 import 'package:arenaclash/Services/userApi/get_user_data.dart';
 import 'package:arenaclash/Services/walletApi/get_current_balance.dart';
@@ -7,6 +8,7 @@ import 'package:arenaclash/Services/walletApi/update_balance.dart';
 import 'package:arenaclash/modals/current_balance.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
@@ -163,7 +165,7 @@ class BadmintonHelper with ChangeNotifier {
                   const SizedBox(
                     height: 5,
                   ),
-                  const Text("OneVsOne Challenge",
+                  const Text("Dual Challenge",
                       style: TextStyle(color: Colors.white, fontSize: 20)),
                   const SizedBox(height: 10),
                   const Text("Fill All Details",
@@ -227,21 +229,52 @@ class BadmintonHelper with ChangeNotifier {
                       Provider.of<GetUserData>(context, listen: false)
                           .getUserData()
                           .whenComplete(() => {
-                            betcoin = num.parse(dualcoins.text),
-                            if (currentBalance.amount >= betcoin) {
-                              Provider.of<PostBadmintonContest>(context, listen: false).postdualteamtournament(context),
-                              Provider.of<UpdateBalance>(context, listen: false).updateCurrentBalance(context),
-                            }else{
-                              print("balance is less"),
-                              // throw Exception("balance is less")
-                            }
-                              })
-                          .whenComplete(() => {
-                                Navigator.pushReplacement(
-                                    context,
-                                    PageTransition(
-                                        child: const BadmintonScreen(),
-                                        type: PageTransitionType.leftToRight))
+                                betcoin = num.parse(dualcoins.text),
+                                if (currentBalance.amount >= betcoin)
+                                  {
+                                    Provider.of<PostBadmintonContest>(context,
+                                            listen: false)
+                                        .postdualteamtournament(context),
+                                    Provider.of<UpdateBalance>(context,
+                                            listen: false)
+                                        .updateCurrentBalance(context),
+                                    Fluttertoast.showToast(
+                                        msg: "Contest created succesfully...",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.BOTTOM,
+                                        timeInSecForIosWeb: 3,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0),
+                                    Navigator.pushReplacement(
+                                        context,
+                                        PageTransition(
+                                            child: const BadmintonScreen(),
+                                            type:
+                                                PageTransitionType.leftToRight)).whenComplete(() => {
+                                                  dualPoint.clear(),
+                                                  dualcoins.clear(),
+                                                })
+                                  }
+                                else
+                                  {
+                                    print("balance is less"),
+                                    Fluttertoast.showToast(
+                                        msg: "Balance is insufficient add it to play....",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.BOTTOM,
+                                        timeInSecForIosWeb: 3,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0),
+                                    Navigator.pushReplacement(
+                                        context,
+                                        PageTransition(
+                                            child: const WalletScreen(),
+                                            type:
+                                                PageTransitionType.leftToRight)).whenComplete(() => {
+                                                  dualPoint.clear(),
+                                                  dualcoins.clear(),
+                                                })
+                                  }
                               });
                     },
                     child: Container(

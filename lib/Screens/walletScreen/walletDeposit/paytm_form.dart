@@ -198,7 +198,7 @@ class _PaytmFormState extends State<PaytmForm> {
                     children: const [
                       Text("Payment method:",
                           style: TextStyle(color: Colors.grey)),
-                      Text("Paytm", style: TextStyle(color: Colors.white)),
+                      Text("All", style: TextStyle(color: Colors.white)),
                     ],
                   ),
                   const Divider(

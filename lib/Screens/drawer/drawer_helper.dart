@@ -21,7 +21,11 @@ class DrawerHelper with ChangeNotifier {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(userdata.name.toString(),
+             userdata.name == null ? const Text("Loading.....",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18)) : Text(userdata.name.toString(),
                   style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,

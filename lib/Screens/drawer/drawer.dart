@@ -5,6 +5,7 @@ import 'package:arenaclash/Screens/helpScreen/help_screen.dart';
 import 'package:arenaclash/Screens/notificationScreen/notification_screen.dart';
 import 'package:arenaclash/Screens/walletScreen/history_drawer.dart';
 import 'package:arenaclash/Screens/walletScreen/wallet_screen.dart';
+import 'package:arenaclash/Services/userApi/get_user_data.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,6 +19,12 @@ class DrawerScreen extends StatefulWidget {
 }
 
 class _DrawerScreenState extends State<DrawerScreen> {
+
+  @override
+  void initState() {
+    Provider.of<GetUserData>(context, listen: false).getUserData();
+    super.initState();
+  }
 
   ConstantColors constantColors = ConstantColors();
 

@@ -1,31 +1,30 @@
 import 'package:arenaclash/Constantcolors.dart';
-import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/badmintonChallenge/badminton_screen.dart';
-import 'package:arenaclash/Services/tournamentApi/get_live_contest.dart';
+import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/cicketChallenge/cricket_screen.dart';
+import 'package:arenaclash/Services/cricketcontestApi/get_ongoing_contest.dart';
 import 'package:arenaclash/Services/tournamentApi/get_ongoing_contest.dart';
 import 'package:arenaclash/modals/badminton_by_accepted.dart';
+import 'package:arenaclash/modals/cricket_contest.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
-class BadmintonOngoingChallenges extends StatefulWidget {
-  const BadmintonOngoingChallenges({Key? key}) : super(key: key);
+class CircketOngoingChallenge extends StatefulWidget {
+  const CircketOngoingChallenge({ Key? key }) : super(key: key);
 
   @override
-  _BadmintonOngoingChallengesState createState() =>
-      _BadmintonOngoingChallengesState();
+  _CircketOngoingChallengeState createState() => _CircketOngoingChallengeState();
 }
 
-class _BadmintonOngoingChallengesState
-    extends State<BadmintonOngoingChallenges> {
-  List<BadmintonContestByAccepted>? _data;
+class _CircketOngoingChallengeState extends State<CircketOngoingChallenge> {
+  List<CricketContestData>? _data;
   bool? _loading;
 
   @override
   void initState() {
     _loading = true;
-    Provider.of<GetBadmintonOngoingContest>(context, listen: false)
+    Provider.of<GetCricketOngoingContest>(context, listen: false)
         .getByAccepted()
         .then((value) => {
               setState(() {
@@ -48,7 +47,7 @@ class _BadmintonOngoingChallengesState
           child: ListView.builder(
               itemCount: null == _data ? 0 : _data!.length,
               itemBuilder: (context, index) {
-                BadmintonContestByAccepted whoAccepted = _data![index];
+                CricketContestData whoAccepted = _data![index];
                 return Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -257,7 +256,7 @@ class _BadmintonOngoingChallengesState
                                                   whoAccepted.id.toString();
                                               try {
                                                 response = await dio.patch(
-                                                    "http://34.93.18.143/badminton/contest/user/info/status/$id",
+                                                    "http://34.93.18.143/cricket/contest/user/info/status/$id",
                                                     data: {
                                                       "status": "ongoing",
                                                       "whoWon": FirebaseAuth
@@ -270,7 +269,7 @@ class _BadmintonOngoingChallengesState
                                                           context,
                                                           PageTransition(
                                                               child:
-                                                                  const BadmintonScreen(),
+                                                                  const CricketScreen(),
                                                               type: PageTransitionType
                                                                   .leftToRight))
                                                     });
@@ -296,9 +295,9 @@ class _BadmintonOngoingChallengesState
                                                   whoAccepted.id.toString();
                                               try {
                                                 response = await dio.patch(
-                                                    "http://34.93.18.143/badminton/contest/user/info/status/$id",
+                                                    "http://34.93.18.143/cricket/contest/user/info/status/$id",
                                                     data: {
-                                                      "status": "ongoing",
+                                                      "status": "finished",
                                                       "whoLose": FirebaseAuth
                                                           .instance
                                                           .currentUser!
@@ -309,7 +308,7 @@ class _BadmintonOngoingChallengesState
                                                           context,
                                                           PageTransition(
                                                               child:
-                                                                  const BadmintonScreen(),
+                                                                  const CricketScreen(),
                                                               type: PageTransitionType
                                                                   .leftToRight))
                                                     });
@@ -334,7 +333,7 @@ class _BadmintonOngoingChallengesState
                                                   whoAccepted.id.toString();
                                               try {
                                                 response = await dio.patch(
-                                                    "http://34.93.18.143/badminton/contest/user/info/status/$id",
+                                                    "http://34.93.18.143/cricket/contest/user/info/status/$id",
                                                     data: {
                                                       "status": "finished",
                                                     }).whenComplete(() => {
@@ -342,7 +341,7 @@ class _BadmintonOngoingChallengesState
                                                           context,
                                                           PageTransition(
                                                               child:
-                                                                  const BadmintonScreen(),
+                                                                  const CricketScreen(),
                                                               type: PageTransitionType
                                                                   .leftToRight))
                                                     });

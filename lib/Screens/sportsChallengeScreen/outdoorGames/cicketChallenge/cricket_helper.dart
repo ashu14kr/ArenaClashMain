@@ -1,8 +1,23 @@
 import 'package:arenaclash/Constantcolors.dart';
+import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/cicketChallenge/cricket_screen.dart';
+import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/footballChallenge/football_screen.dart';
+import 'package:arenaclash/Screens/walletScreen/wallet_screen.dart';
+import 'package:arenaclash/Services/cricketcontestApi/post_cricket_contest.dart';
+import 'package:arenaclash/Services/footballcontestApi/post_football_contest.dart';
+import 'package:arenaclash/Services/userApi/get_user_data.dart';
+import 'package:arenaclash/Services/walletApi/get_current_balance.dart';
+import 'package:arenaclash/Services/walletApi/update_balance.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 class CricketHelper with ChangeNotifier {
+  TextEditingController totalOvers = TextEditingController();
+  TextEditingController totalPlayers = TextEditingController();
+  TextEditingController totalCoins = TextEditingController();
+  var betcoin;
   Widget upperContainer(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 10),
@@ -83,11 +98,11 @@ class CricketHelper with ChangeNotifier {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text("1.  OnePlayer vs OnePlayer",
+                      const Text("1.  Team vs Team",
                           style: TextStyle(color: Colors.white)),
                       IconButton(
                           onPressed: () {
-                            oneOnOneChallenge(context);
+                            teamVsTeamChallenges(context);
                           },
                           icon: const Icon(EvaIcons.checkmarkCircle,
                               color: Colors.red))
@@ -99,11 +114,11 @@ class CricketHelper with ChangeNotifier {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text("2.  Team vs Team",
+                      const Text("2.  OnePlayer vs OnePlayer",
                           style: TextStyle(color: Colors.white)),
                       IconButton(
                           onPressed: () {
-                            teamVsTeamChallenges(context);
+                            oneOnOneChallenge(context);
                           },
                           icon: const Icon(EvaIcons.checkmarkCircle,
                               color: Colors.red))
@@ -221,6 +236,8 @@ class CricketHelper with ChangeNotifier {
 
   Future teamVsTeamChallenges(BuildContext context) {
     ConstantColors constantColors = ConstantColors();
+    var currentBalance = Provider.of<GetCurrentBalance>(context, listen: false);
+    var updateBalance = Provider.of<UpdateBalance>(context, listen: false);
     return showModalBottomSheet(
         context: context,
         backgroundColor: Colors.transparent,
@@ -260,11 +277,12 @@ class CricketHelper with ChangeNotifier {
                         color: Colors.grey,
                       )),
                   const SizedBox(height: 15),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: TextField(
-                      style: TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
+                      style: const TextStyle(color: Colors.white),
+                      controller: totalOvers,
+                      decoration: const InputDecoration(
                           hintText: "Total Overs",
                           prefixIcon: Icon(Icons.sports_cricket,
                               color: Colors.white),
@@ -283,11 +301,12 @@ class CricketHelper with ChangeNotifier {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: TextField(
-                      style: TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
+                      style: const TextStyle(color: Colors.white),
+                      controller: totalPlayers,
+                      decoration: const InputDecoration(
                           hintText: "Total Players",
                           prefixIcon: Icon(Icons.person,
                               color: Colors.white),
@@ -306,11 +325,12 @@ class CricketHelper with ChangeNotifier {
                     ),
                   ),
                   const SizedBox(height: 10,),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: TextField(
-                      style: TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
+                      style: const TextStyle(color: Colors.white),
+                      controller: totalCoins,
+                      decoration: const InputDecoration(
                           hintText: "Coins",
                           prefixIcon: Icon(Icons.account_balance_wallet_outlined,
                               color: Colors.white),
@@ -329,15 +349,75 @@ class CricketHelper with ChangeNotifier {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  Container(
-                height: 45,
-                width: 200,
-                decoration: BoxDecoration(
-                  color: Colors.green,
-                  borderRadius: BorderRadius.circular(25)
-                ),
-                child: const Center(child: Text("Create Challenge", style: TextStyle(color: Colors.white, fontSize: 16))),
-              )
+                  InkWell(
+                    onTap: (){
+                      Provider.of<GetCurrentBalance>(context, listen: false)
+                          .getCurrentBalance();
+                      Provider.of<GetUserData>(context, listen: false)
+                          .getUserData()
+                          .whenComplete(() => {
+                            betcoin = num.parse(totalCoins.text),
+                                if (currentBalance.amount >= betcoin){
+                                    Provider.of<PostCricketContest>(context,
+                                            listen: false)
+                                        .postdualteamtournament(context),
+                                    Provider.of<UpdateBalance>(context,
+                                            listen: false)
+                                        .cricketUpdateCurrentBalance(context),
+                                    Fluttertoast.showToast(
+                                        msg: "Contest created succesfully...",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.BOTTOM,
+                                        timeInSecForIosWeb: 3,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0),
+                                    Navigator.pushReplacement(
+                                            context,
+                                            PageTransition(
+                                                child: const CricketScreen(),
+                                                type: PageTransitionType
+                                                    .leftToRight))
+                                        .whenComplete(() => {
+                                              totalCoins.clear(),
+                                              totalOvers.clear(),
+                                              totalPlayers.clear(),
+                                            })
+                                  }
+                                else
+                                  {
+                                    print("balance is less"),
+                                    Fluttertoast.showToast(
+                                        msg:
+                                            "Balance is insufficient add it to play....",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.BOTTOM,
+                                        timeInSecForIosWeb: 3,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0),
+                                    Navigator.pushReplacement(
+                                            context,
+                                            PageTransition(
+                                                child: const WalletScreen(),
+                                                type: PageTransitionType
+                                                    .leftToRight))
+                                        .whenComplete(() => {
+                                              totalCoins.clear(),
+                                              totalOvers.clear(),
+                                              totalPlayers.clear(),
+                                            })
+                                  }
+                          });
+                    },
+                    child: Container(
+                                  height: 45,
+                                  width: 200,
+                                  decoration: BoxDecoration(
+                    color: Colors.green,
+                    borderRadius: BorderRadius.circular(25)
+                                  ),
+                                  child: const Center(child: Text("Create Challenge", style: TextStyle(color: Colors.white, fontSize: 16))),
+                                ),
+                  )
                 ],
               ),
             ),
