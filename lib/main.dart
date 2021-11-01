@@ -8,6 +8,17 @@ import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/badmintonC
 import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/cicketChallenge/cricket_helper.dart';
 import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/footballChallenge/football_helper.dart';
 import 'package:arenaclash/Screens/walletScreen/wallet_helper.dart';
+import 'package:arenaclash/Services/cricketcontestApi/get_finished_contest.dart';
+import 'package:arenaclash/Services/cricketcontestApi/get_live_contest.dart';
+import 'package:arenaclash/Services/cricketcontestApi/get_ongoing_contest.dart';
+import 'package:arenaclash/Services/cricketcontestApi/post_cricket_contest.dart';
+import 'package:arenaclash/Services/cricketcontestApi/update_contest_info.dart';
+import 'package:arenaclash/Services/footballcontestApi/get_finished_contest.dart';
+import 'package:arenaclash/Services/footballcontestApi/get_live_contest.dart';
+import 'package:arenaclash/Services/footballcontestApi/get_ongoing_contest.dart';
+import 'package:arenaclash/Services/footballcontestApi/post_football_contest.dart';
+import 'package:arenaclash/Services/footballcontestApi/update_contest_info.dart';
+import 'package:arenaclash/Services/location/get_location.dart';
 import 'package:arenaclash/Services/tournamentApi/get_finished_contest.dart';
 import 'package:arenaclash/Services/tournamentApi/get_live_contest.dart';
 import 'package:arenaclash/Services/tournamentApi/get_ongoing_contest.dart';
@@ -20,6 +31,7 @@ import 'package:arenaclash/Services/userApi/get_user_data.dart';
 import 'package:arenaclash/Services/walletApi/get_current_balance.dart';
 import 'package:arenaclash/Services/walletApi/get_wallethistory.dart';
 import 'package:arenaclash/Services/walletApi/post_initial_balance.dart';
+import 'package:arenaclash/Services/walletApi/post_withdrawl_data.dart';
 import 'package:arenaclash/Services/walletApi/update_balance.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -70,6 +82,18 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => UpadateContestInfo()),
           ChangeNotifierProvider(create: (_) => GetBadmintonOngoingContest()),
           ChangeNotifierProvider(create: (_) => GetFinishedContest()),
+          ChangeNotifierProvider(create: (_) => GetCurrentLocation()),
+          ChangeNotifierProvider(create: (_) => PostWithdrawalData()),
+          ChangeNotifierProvider(create: (_) => GetCricketFinishedContest()),
+          ChangeNotifierProvider(create: (_) => GetCricketLiveContest()),
+          ChangeNotifierProvider(create: (_) => GetCricketOngoingContest()),
+          ChangeNotifierProvider(create: (_) => PostCricketContest()),
+          ChangeNotifierProvider(create: (_) => UpadateCricketContestInfo()),
+          ChangeNotifierProvider(create: (_) => GetFootballFinishedContest()),
+          ChangeNotifierProvider(create: (_) => GetFootballLiveContest()),
+          ChangeNotifierProvider(create: (_) => GetFootballOngoingContest()),
+          ChangeNotifierProvider(create: (_) => PostFootballContest()),
+          ChangeNotifierProvider(create: (_) => UpadateFootballContestInfo()),
         ],
     );
   }

@@ -1,6 +1,8 @@
 import 'package:arenaclash/Constantcolors.dart';
 import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/footballChallenge/football_helper.dart';
 import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/footballChallenge/live_challenges.dart';
+import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/footballChallenge/my_challenges.dart';
+import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/footballChallenge/ongoing_challenges.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +20,7 @@ class _FootballScreenState extends State<FootballScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         backgroundColor: constantColors.mainColor,
         floatingActionButton: FloatingActionButton.extended(
@@ -40,13 +42,14 @@ class _FootballScreenState extends State<FootballScreen> {
                   .upperContainer(context),
               const TabBar(
                   indicatorColor: Colors.red,
-                  indicatorPadding: EdgeInsets.symmetric(horizontal: 80),
+                  indicatorPadding: EdgeInsets.symmetric(horizontal: 25),
                   indicatorWeight: 2.0,
                   labelColor: Colors.red,
                   unselectedLabelColor: Colors.grey,
                   tabs: [
-                    Tab(text: "Live challenges"),
-                    Tab(text: "My Challenges"),
+                    Tab(text: "Live"),
+                    Tab(text: "Ongoing"),
+                    Tab(text: "History"),
                   ]),
               Container(
                 height: MediaQuery.of(context).size.height * 0.7,
@@ -54,7 +57,8 @@ class _FootballScreenState extends State<FootballScreen> {
                 decoration: const BoxDecoration(color: Colors.transparent),
                 child: const TabBarView(children: [
                   LiveChallenges(),
-                  LiveChallenges(),
+                  FootballOngoingChallenge(),
+                  FootballMyChallenge(),
                 ]),
               )
             ],

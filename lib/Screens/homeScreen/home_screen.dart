@@ -42,8 +42,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             yoffset = 0;
                             scaleFactor = 1;
                             isDrawerOpen = false;
-                            Provider.of<GetUserData>(context, listen: false)
-                                .getUserData();
                           });
                         },
                       )
@@ -61,34 +59,36 @@ class _HomeScreenState extends State<HomeScreen> {
                 backgroundColor: Colors.transparent,
               ),
               backgroundColor: constantColors.mainColor,
-              body: Column(
-                children: [
-                  Center(
-                      child: Provider.of<HomeHelper>(context, listen: false)
-                          .header(context)),
-                  const SizedBox(height: 15),
-                  const TabBar(
-                      indicatorColor: Colors.red,
-                      indicatorPadding: EdgeInsets.symmetric(horizontal: 80),
-                      indicatorWeight: 2.0,
-                      labelColor: Colors.red,
-                      unselectedLabelColor: Colors.grey,
-                      tabs: [
-                        Tab(text: "Outdoor Games"),
-                        Tab(text: "Online Games"),
-                      ]),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 15),
-                    child: Container(
-                      height: MediaQuery.of(context).size.height * 0.6,
-                      color: Colors.transparent,
-                      child: const TabBarView(children: [
-                        OutdoorSports(),
-                        OnlineGames(),
-                      ]),
+              body: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Center(
+                        child: Provider.of<HomeHelper>(context, listen: false)
+                            .header(context)),
+                    const SizedBox(height: 15),
+                    const TabBar(
+                        indicatorColor: Colors.red,
+                        indicatorPadding: EdgeInsets.symmetric(horizontal: 80),
+                        indicatorWeight: 2.0,
+                        labelColor: Colors.red,
+                        unselectedLabelColor: Colors.grey,
+                        tabs: [
+                          Tab(text: "Outdoor Games"),
+                          Tab(text: "Online Games"),
+                        ]),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 15),
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.6,
+                        color: Colors.transparent,
+                        child: const TabBarView(children: [
+                          OutdoorSports(),
+                          OnlineGames(),
+                        ]),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               )),
         ),
       ),

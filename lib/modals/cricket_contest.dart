@@ -1,19 +1,19 @@
 // To parse this JSON data, do
 //
-//     final badmintonContestData = badmintonContestDataFromJson(jsonString);
+//     final cricketContestData = cricketContestDataFromJson(jsonString);
 
 import 'dart:convert';
 
-List<BadmintonContestData> badmintonFromJson(String str) => List<BadmintonContestData>.from(json.decode(str).map((x) => BadmintonContestData.fromJson(x)));
+List<CricketContestData> cricketContestDataFromJson(String str) => List<CricketContestData>.from(json.decode(str).map((x) => CricketContestData.fromJson(x)));
 
-String badmintonToJson(List<BadmintonContestData> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String cricketContestDataToJson(List<CricketContestData> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class BadmintonContestData {
-    BadmintonContestData({
+class CricketContestData {
+    CricketContestData({
         required this.id,
         required this.status,
         required this.matchType,
-        required this.totalPoints,
+        required this.totalOvers,
         required this.betCoins,
         required this.winningCoins,
         required this.whoWon,
@@ -22,6 +22,8 @@ class BadmintonContestData {
         required this.userlng,
         required this.userUidWhoCreated,
         required this.userUidWhoAccepted,
+        required this.createrName,
+        required this.acceperName,
         required this.userWhoCreatedLocation,
         required this.userWhoCreatedContactDetail,
         required this.contestCreatedDate,
@@ -31,7 +33,7 @@ class BadmintonContestData {
     String id;
     String status;
     String matchType;
-    String totalPoints;
+    String totalOvers;
     int betCoins;
     int winningCoins;
     String whoWon;
@@ -40,16 +42,18 @@ class BadmintonContestData {
     double userlng;
     String userUidWhoCreated;
     String userUidWhoAccepted;
+    String createrName;
+    String acceperName;
     String userWhoCreatedLocation;
     String userWhoCreatedContactDetail;
     String contestCreatedDate;
     int v;
 
-    factory BadmintonContestData.fromJson(Map<String, dynamic> json) => BadmintonContestData(
+    factory CricketContestData.fromJson(Map<String, dynamic> json) => CricketContestData(
         id: json["_id"],
         status: json["status"],
         matchType: json["matchType"],
-        totalPoints: json["totalPoints"],
+        totalOvers: json["totalOvers"],
         betCoins: json["betCoins"],
         winningCoins: json["winningCoins"],
         whoWon: json["whoWon"],
@@ -58,6 +62,8 @@ class BadmintonContestData {
         userlng: json["userlng"].toDouble(),
         userUidWhoCreated: json["userUidWhoCreated"],
         userUidWhoAccepted: json["userUidWhoAccepted"],
+        createrName: json["createrName"],
+        acceperName: json["acceperName"],
         userWhoCreatedLocation: json["userWhoCreatedLocation"],
         userWhoCreatedContactDetail: json["userWhoCreatedContactDetail"],
         contestCreatedDate: json["contestCreatedDate"],
@@ -68,7 +74,7 @@ class BadmintonContestData {
         "_id": id,
         "status": status,
         "matchType": matchType,
-        "totalPoints": totalPoints,
+        "totalOvers": totalOvers,
         "betCoins": betCoins,
         "winningCoins": winningCoins,
         "whoWon": whoWon,
@@ -77,6 +83,8 @@ class BadmintonContestData {
         "userlng": userlng,
         "userUidWhoCreated": userUidWhoCreated,
         "userUidWhoAccepted": userUidWhoAccepted,
+        "createrName": createrName,
+        "acceperName": acceperName,
         "userWhoCreatedLocation": userWhoCreatedLocation,
         "userWhoCreatedContactDetail": userWhoCreatedContactDetail,
         "contestCreatedDate": contestCreatedDate,

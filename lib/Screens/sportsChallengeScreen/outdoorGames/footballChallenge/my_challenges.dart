@@ -1,29 +1,27 @@
-import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/cicketChallenge/winorloss_screen.dart';
-import 'package:arenaclash/Services/cricketcontestApi/get_finished_contest.dart';
+import 'package:arenaclash/Services/footballcontestApi/get_finished_contest.dart';
 import 'package:arenaclash/Services/tournamentApi/get_finished_contest.dart';
 import 'package:arenaclash/modals/badminton_by_accepted.dart';
-import 'package:arenaclash/modals/cricket_contest.dart';
+import 'package:arenaclash/modals/football_contest.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
-class MyChallenges extends StatefulWidget {
-  const MyChallenges({Key? key}) : super(key: key);
+class FootballMyChallenge extends StatefulWidget {
+  const FootballMyChallenge({ Key? key }) : super(key: key);
 
   @override
-  _MyChallengesState createState() => _MyChallengesState();
+  _FootballMyChallengeState createState() => _FootballMyChallengeState();
 }
 
-class _MyChallengesState extends State<MyChallenges> {
-  List<CricketContestData>? _data;
+class _FootballMyChallengeState extends State<FootballMyChallenge> {
+  List<FootballContestData>? _data;
   bool? _loading;
   var uid = FirebaseAuth.instance.currentUser!.uid;
 
   @override
   void initState() {
     _loading = true;
-    Provider.of<GetCricketFinishedContest>(context, listen: false)
+    Provider.of<GetFootballFinishedContest>(context, listen: false)
         .getFinishedContest()
         .then((value) => {
           setState((){
@@ -44,7 +42,7 @@ class _MyChallengesState extends State<MyChallenges> {
           child: ListView.builder(
               itemCount: null == _data ? 0 : _data!.length,
               itemBuilder: (context, index) {
-                CricketContestData data = _data![index];
+                FootballContestData data = _data![index];
                 return Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -75,7 +73,7 @@ class _MyChallengesState extends State<MyChallenges> {
                                 ),
                                 Column(
                                   children: [
-                                    Text("CRICKET_${data.matchType}",
+                                    Text("FOOTBALL_${data.matchType}",
                                         style: const TextStyle(
                                             color: Colors.red, fontSize: 12)),
                                     const SizedBox(height: 5),

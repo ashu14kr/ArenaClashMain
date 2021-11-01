@@ -6,6 +6,7 @@ import 'package:arenaclash/Services/userApi/add_user_login.dart';
 import 'package:arenaclash/Services/walletApi/post_initial_balance.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
@@ -16,15 +17,19 @@ class EmailAndPass with ChangeNotifier {
   bool user = false;
   bool alreadynotemail = false;
   bool resemailnotvalid = false;
+
   emailAuth(BuildContext context) async {
+    var resdata = Provider.of<RegistrationHelper>(context, listen: false);
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: Provider.of<RegistrationHelper>(context, listen: false)
-              .userEmail
-              .text,
-          password: Provider.of<RegistrationHelper>(context, listen: false)
-              .userPassword
-              .text).whenComplete(() => {
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: Provider.of<RegistrationHelper>(context, listen: false)
+                  .userEmail
+                  .text,
+              password: Provider.of<RegistrationHelper>(context, listen: false)
+                  .userPassword
+                  .text)
+          .whenComplete(() => {
                 Provider.of<AddUserData>(context, listen: false)
                     .postUserData(context),
                 Provider.of<PostInitialBalance>(context, listen: false)
@@ -45,16 +50,30 @@ class EmailAndPass with ChangeNotifier {
       }
     }
     if (emailnotvalid == false && alreadynotemail == false) {
+      Fluttertoast.showToast(
+                          msg: "Loading....",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIosWeb: 3,
+                          textColor: Colors.white,
+                          fontSize: 16.0);
       Navigator.pushReplacement(
               context,
               PageTransition(
                   child: const LoginScreen(),
-                  type: PageTransitionType.leftToRight));
+                  type: PageTransitionType.leftToRight))
+          .whenComplete(() => {
+                resdata.userName.clear(),
+                resdata.userEmail.clear(),
+                resdata.userNumber.clear(),
+                resdata.userPassword.clear()
+              });
     }
     notifyListeners();
   }
 
   emailLogin(BuildContext context) async {
+    var logindata = Provider.of<LoginHelper>(context, listen: false);
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email:
@@ -90,11 +109,22 @@ class EmailAndPass with ChangeNotifier {
         passnotvalid == false &&
         founduser == false &&
         user == false) {
+      Fluttertoast.showToast(
+                          msg: "Loading....",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIosWeb: 3,
+                          textColor: Colors.white,
+                          fontSize: 16.0);
       Navigator.pushReplacement(
-          context,
-          PageTransition(
-              child: const HomeAndDrawer(),
-              type: PageTransitionType.leftToRight));
+              context,
+              PageTransition(
+                  child: const HomeAndDrawer(),
+                  type: PageTransitionType.leftToRight))
+          .whenComplete(() => {
+                logindata.useremail.clear(),
+                logindata.userpass.clear(),
+              });
     }
     notifyListeners();
   }

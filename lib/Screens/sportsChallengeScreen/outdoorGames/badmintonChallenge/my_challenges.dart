@@ -1,5 +1,6 @@
 import 'package:arenaclash/Services/tournamentApi/get_finished_contest.dart';
 import 'package:arenaclash/modals/badminton_by_accepted.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,6 +14,7 @@ class BadmintonMyChallenges extends StatefulWidget {
 class _BadmintonMyChallengesState extends State<BadmintonMyChallenges> {
   List<BadmintonContestByAccepted>? _data;
   bool? _loading;
+  var uid = FirebaseAuth.instance.currentUser!.uid;
 
   @override
   void initState() {
@@ -63,20 +65,20 @@ class _BadmintonMyChallengesState extends State<BadmintonMyChallenges> {
                                     CircleAvatar(
                                       backgroundColor: Colors.blue,
                                     ),
-                                    Text("Salena Gomez",
+                                    Text("Arena Clash",
                                         style: TextStyle(fontSize: 10))
                                   ],
                                 ),
                                 Column(
-                                  children: const [
-                                    Text("CRICKET_OneVsOne",
-                                        style: TextStyle(
+                                  children: [
+                                    Text("BADMINTON_${data.matchType}",
+                                        style: const TextStyle(
                                             color: Colors.red, fontSize: 12)),
-                                    SizedBox(height: 5),
-                                    Text("has challenged for"),
-                                    SizedBox(height: 4),
-                                    Text("100.0 Coins",
-                                        style: TextStyle(
+                                    const SizedBox(height: 5),
+                                    const Text("has challenged for"),
+                                    const SizedBox(height: 4),
+                                    Text("${data.betCoins.toString()}.0 Coins",
+                                        style: const TextStyle(
                                             color: Colors.green, fontSize: 15)),
                                   ],
                                 ),
@@ -85,7 +87,7 @@ class _BadmintonMyChallengesState extends State<BadmintonMyChallenges> {
                                     CircleAvatar(
                                       backgroundColor: Colors.blue,
                                     ),
-                                    Text("Waiting...",
+                                    Text("Arena Clash",
                                         style: TextStyle(fontSize: 10))
                                   ],
                                 ),
@@ -112,11 +114,11 @@ class _BadmintonMyChallengesState extends State<BadmintonMyChallenges> {
                               child: Row(
                                 children: [
                                   Row(
-                                    children: const [
-                                      Text("Winning:",
+                                    children: [
+                                      const Text("Winning:",
                                           style: TextStyle(color: Colors.grey)),
-                                      Text("180.00",
-                                          style: TextStyle(color: Colors.green))
+                                      Text(data.winningCoins.toString()+".00",
+                                          style: const TextStyle(color: Colors.green))
                                     ],
                                   ),
                                   const SizedBox(width: 20),
@@ -127,7 +129,7 @@ class _BadmintonMyChallengesState extends State<BadmintonMyChallenges> {
                                   ),
                                   const SizedBox(width: 35),
                                   const SizedBox(width: 25),
-                                  Text("Waiting",
+                                  Text(data.whoWon == uid ? "You Won" : data.whoLose == uid ? "You Lose" : "Cancelled",
                                       style: TextStyle(color: Colors.blue[800]))
                                 ],
                               ),

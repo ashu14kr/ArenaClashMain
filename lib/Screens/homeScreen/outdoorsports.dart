@@ -1,8 +1,12 @@
 import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/badmintonChallenge/badminton_screen.dart';
+import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/cicketChallenge/comming_soon_c.dart';
 import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/cicketChallenge/cricket_screen.dart';
+import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/footballChallenge/comming_soon.dart';
 import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/footballChallenge/football_screen.dart';
+import 'package:arenaclash/Services/location/get_location.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 class OutdoorSports extends StatefulWidget {
   const OutdoorSports({Key? key}) : super(key: key);
@@ -12,6 +16,13 @@ class OutdoorSports extends StatefulWidget {
 }
 
 class _OutdoorSportsState extends State<OutdoorSports> {
+
+  @override
+  void initState() {
+    Provider.of<GetCurrentLocation>(context, listen: false).getUserLocation(context);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
