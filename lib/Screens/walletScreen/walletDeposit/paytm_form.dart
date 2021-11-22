@@ -1,5 +1,6 @@
 import 'package:arenaclash/Constantcolors.dart';
 import 'package:arenaclash/Screens/walletScreen/wallet_screen.dart';
+import 'package:arenaclash/Services/userApi/get_user_data.dart';
 import 'package:arenaclash/Services/walletApi/get_current_balance.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -31,13 +32,14 @@ class _PaytmFormState extends State<PaytmForm> {
   }
 
   void openCheckout() async {
+    var userdata = Provider.of<GetUserData>(context, listen: false);
     int amounttopay = int.parse(amount.text) * 100;
     var options = {
-      'key': 'rzp_test_onfTbEge15K3ej',
+      'key': 'rzp_live_c3FoRoxuKhNdXk',
       'amount': amounttopay,
       'name': 'Arena clash',
       'description': 'wallet refil',
-      'prefill': {'contact': '8789553987', 'email': 'hello@gmail.com'},
+      'prefill': {'contact': '${userdata.phone}', 'email': '${userdata.email}'},
       'external': {
         'wallets': ['paytm']
       }

@@ -1,7 +1,5 @@
 import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/badmintonChallenge/badminton_screen.dart';
-import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/cicketChallenge/comming_soon_c.dart';
 import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/cicketChallenge/cricket_screen.dart';
-import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/footballChallenge/comming_soon.dart';
 import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/footballChallenge/football_screen.dart';
 import 'package:arenaclash/Services/location/get_location.dart';
 import 'package:flutter/material.dart';

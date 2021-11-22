@@ -1,16 +1,15 @@
 import 'package:arenaclash/Constantcolors.dart';
-import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/badmintonChallenge/badminton_screen.dart';
 import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/footballChallenge/football_screen.dart';
+import 'package:arenaclash/Screens/walletScreen/wallet_screen.dart';
 import 'package:arenaclash/Services/footballcontestApi/get_live_contest.dart';
 import 'package:arenaclash/Services/location/get_location.dart';
-import 'package:arenaclash/Services/tournamentApi/get_live_contest.dart';
 import 'package:arenaclash/Services/walletApi/get_current_balance.dart';
-import 'package:arenaclash/modals/badminton_contest.dart';
 import 'package:arenaclash/modals/football_contest.dart';
 import 'package:dio/dio.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
@@ -31,6 +30,7 @@ class _LiveChallengesState extends State<LiveChallenges> {
 
   @override
   void initState() {
+    Provider.of<GetCurrentLocation>(context, listen: false).getUserLocation(context);
     _loading = true;
     Provider.of<GetFootballLiveContest>(context, listen: false)
         .getcontestwithlive()
@@ -74,8 +74,8 @@ class _LiveChallengesState extends State<LiveChallenges> {
                         location.contestCreaterlat,
                         location.contestCreaterlng,
                         footballContestData.userlat,
-                        footballContestData.userlng)/100;
-                    return distance <= 2 ? Padding(
+                        footballContestData.userlng);
+                    return distance <= 2000 ? Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 10),
                       child: Stack(children: [
@@ -510,8 +510,31 @@ class _LiveChallengesState extends State<LiveChallenges> {
                                                               print(e);
                                                             }
                                                           } else {
-                                                            print(
-                                                                "balance is less");
+                                                            Fluttertoast.showToast(
+                                                                      msg:
+                                                                          "Balance is less. please refill your wallet to play",
+                                                                      toastLength:
+                                                                          Toast
+                                                                              .LENGTH_SHORT,
+                                                                      gravity: ToastGravity
+                                                                          .CENTER,
+                                                                      timeInSecForIosWeb:
+                                                                          1,
+                                                                      backgroundColor:
+                                                                          Colors
+                                                                              .red,
+                                                                      textColor:
+                                                                          Colors
+                                                                              .white,
+                                                                      fontSize:
+                                                                          16.0);
+                                                                  Navigator.pushReplacement(
+                                                                      context,
+                                                                      PageTransition(
+                                                                          child:
+                                                                              const WalletScreen(),
+                                                                          type:
+                                                                              PageTransitionType.leftToRight));
                                                           }
                                                         },
                                                         child: Container(

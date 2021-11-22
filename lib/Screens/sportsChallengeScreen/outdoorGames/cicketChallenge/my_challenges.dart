@@ -1,11 +1,7 @@
-import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/cicketChallenge/winorloss_screen.dart';
 import 'package:arenaclash/Services/cricketcontestApi/get_finished_contest.dart';
-import 'package:arenaclash/Services/tournamentApi/get_finished_contest.dart';
-import 'package:arenaclash/modals/badminton_by_accepted.dart';
 import 'package:arenaclash/modals/cricket_contest.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 class MyChallenges extends StatefulWidget {

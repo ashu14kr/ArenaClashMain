@@ -1,8 +1,6 @@
 import 'package:arenaclash/Constantcolors.dart';
 import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/footballChallenge/football_screen.dart';
 import 'package:arenaclash/Services/footballcontestApi/get_ongoing_contest.dart';
-import 'package:arenaclash/Services/tournamentApi/get_ongoing_contest.dart';
-import 'package:arenaclash/modals/badminton_by_accepted.dart';
 import 'package:arenaclash/modals/football_contest.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
