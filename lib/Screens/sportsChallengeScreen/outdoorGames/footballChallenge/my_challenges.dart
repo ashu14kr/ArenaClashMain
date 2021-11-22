@@ -1,6 +1,4 @@
 import 'package:arenaclash/Services/footballcontestApi/get_finished_contest.dart';
-import 'package:arenaclash/Services/tournamentApi/get_finished_contest.dart';
-import 'package:arenaclash/modals/badminton_by_accepted.dart';
 import 'package:arenaclash/modals/football_contest.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

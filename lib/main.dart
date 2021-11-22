@@ -35,12 +35,16 @@ import 'package:arenaclash/Services/walletApi/post_withdrawl_data.dart';
 import 'package:arenaclash/Services/walletApi/update_balance.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'Screens/loginScreen/login_screen.dart';
 import 'Screens/splashScreen/splash_helper.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
   await Firebase.initializeApp();
   runApp(const MyApp());
 }
@@ -52,7 +56,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Arena Clash',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),

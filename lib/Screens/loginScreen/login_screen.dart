@@ -1,8 +1,6 @@
 import 'package:arenaclash/Constantcolors.dart';
-import 'package:arenaclash/Screens/drawer/home_drawer.dart';
 import 'package:arenaclash/Screens/registrationScreen/registration.dart';
 import 'package:arenaclash/Services/Auth/emailandpass_auth.dart';
-import 'package:arenaclash/Services/walletApi/get_wallethistory.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';

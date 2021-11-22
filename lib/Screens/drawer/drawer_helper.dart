@@ -15,7 +15,8 @@ class DrawerHelper with ChangeNotifier {
         children: [
           const CircleAvatar(
             radius: 20,
-            backgroundColor: Colors.orange,
+            backgroundColor: Colors.transparent,
+            child: Icon(EvaIcons.personOutline, color: Colors.red),
           ),
           const SizedBox(width: 15),
           Column(

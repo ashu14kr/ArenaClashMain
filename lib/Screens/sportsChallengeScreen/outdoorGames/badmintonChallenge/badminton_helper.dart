@@ -1,11 +1,11 @@
 import 'package:arenaclash/Constantcolors.dart';
 import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/badmintonChallenge/badminton_screen.dart';
 import 'package:arenaclash/Screens/walletScreen/wallet_screen.dart';
+import 'package:arenaclash/Services/location/get_location.dart';
 import 'package:arenaclash/Services/tournamentApi/post_badminton_contest.dart';
 import 'package:arenaclash/Services/userApi/get_user_data.dart';
 import 'package:arenaclash/Services/walletApi/get_current_balance.dart';
 import 'package:arenaclash/Services/walletApi/update_balance.dart';
-import 'package:arenaclash/modals/current_balance.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -224,6 +224,7 @@ class BadmintonHelper with ChangeNotifier {
                   const SizedBox(height: 20),
                   InkWell(
                     onTap: () {
+                      Provider.of<GetCurrentLocation>(context, listen: false).getUserLocation(context);
                       Provider.of<GetCurrentBalance>(context, listen: false)
                           .getCurrentBalance();
                       Provider.of<GetUserData>(context, listen: false)

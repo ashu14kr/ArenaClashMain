@@ -1,6 +1,5 @@
 import 'package:arenaclash/Constantcolors.dart';
 import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/badmintonChallenge/badminton_screen.dart';
-import 'package:arenaclash/Services/tournamentApi/get_live_contest.dart';
 import 'package:arenaclash/Services/tournamentApi/get_ongoing_contest.dart';
 import 'package:arenaclash/modals/badminton_by_accepted.dart';
 import 'package:dio/dio.dart';
