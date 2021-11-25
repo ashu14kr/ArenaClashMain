@@ -31,11 +31,13 @@ class _CricketLiveChallengesState extends State<CricketLiveChallenges> {
   @override
   void initState() {
     Provider.of<GetCurrentLocation>(context, listen: false).getUserLocation(context);
+    var userbalance = Provider.of<GetCurrentBalance>(context, listen: false).getCurrentBalance();
     _loading = true;
     Provider.of<GetCricketLiveContest>(context, listen: false)
         .getcontestwithlive()
         .then((status) => {
               setState(() {
+                userbalance;
                 _livestatus = status;
                 _loading = false;
               }),
@@ -74,7 +76,7 @@ class _CricketLiveChallengesState extends State<CricketLiveChallenges> {
                         location.contestCreaterlng,
                         badmintonContestData.userlat,
                         badmintonContestData.userlng);
-                    return distance <= 2000 ? Padding(
+                    return distance <= 2000 && badmintonContestData.userUidWhoCreated != FirebaseAuth.instance.currentUser!.uid ? Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 10),
                       child: Stack(children: [

@@ -17,6 +17,7 @@ class TransactionHistory {
         required this.senderName,
         required this.paymentCreated,
         required this.processedOn,
+        required this.paymentType,
         required this.amount,
         required this.v,
     });
@@ -28,6 +29,7 @@ class TransactionHistory {
     String senderName;
     String paymentCreated;
     String processedOn;
+    String paymentType;
     int amount;
     int v;
 
@@ -39,6 +41,7 @@ class TransactionHistory {
         senderName: json["senderName"],
         paymentCreated: json["paymentCreated"],
         processedOn: json["processedOn"],
+        paymentType: json["paymentType"],
         amount: json["amount"],
         v: json["__v"],
     );
@@ -51,6 +54,7 @@ class TransactionHistory {
         "senderName": senderName,
         "paymentCreated": paymentCreated,
         "processedOn": processedOn,
+        "paymentType": paymentType,
         "amount": amount,
         "__v": v,
     };
