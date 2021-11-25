@@ -5,6 +5,7 @@ import 'package:arenaclash/Services/walletApi/get_current_balance.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
@@ -55,9 +56,9 @@ class _PaytmFormState extends State<PaytmForm> {
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
     print(
         "Payment success ${response.orderId}, ${response.paymentId}, ${response.signature}");
-        paymentid = response.paymentId;
-        postTransactionHistory(context);
-        updateCurrentBalance(context);
+    paymentid = response.paymentId;
+    postTransactionHistory(context);
+    updateCurrentBalance(context);
 
     Navigator.pushReplacement(
         context,
@@ -210,9 +211,22 @@ class _PaytmFormState extends State<PaytmForm> {
                 ],
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 120),
             FloatingActionButton.extended(
-              onPressed: openCheckout,
+              onPressed: () {
+                var depositAmount = num.parse(amount.text);
+                if (depositAmount >= 10) {
+                  openCheckout();
+                } else {
+                  Fluttertoast.showToast(
+                      msg: "Minimum Deposit amount: 10",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIosWeb: 3,
+                      textColor: Colors.white,
+                      fontSize: 16.0);
+                }
+              },
               label: const Text("CONFIRM"),
               backgroundColor: Colors.green,
             )
@@ -222,36 +236,42 @@ class _PaytmFormState extends State<PaytmForm> {
     );
   }
 
-  Future postTransactionHistory(BuildContext context)async{
+  Future postTransactionHistory(BuildContext context) async {
     Response responsehttp;
     var dio = Dio();
+    var userData = Provider.of<GetUserData>(context, listen: false);
+    DateTime now = DateTime.now();
+    String time = now.month.toString()+ "."+now.day.toString()+","+  now.year.toString() + " "+ now.hour.toString() + ":" + now.minute.toString();
     try {
-      responsehttp = await dio.post("http://34.93.18.143/user/payment/wallethistory/id/lpjkhy", data: {
-      "user": FirebaseAuth.instance.currentUser!.uid.toString(),
-      "status": "completed",
-      "requestId": paymentid,
-      "senderName": "Ashutosh Kumar",
-      "paymentCreated": "",
-      "processedOn": "",
-      "amount": amount.text
-    });
-    print(responsehttp.data);
-    print(responsehttp.statusCode);
+      responsehttp = await dio.post(
+          "http://34.93.18.143/user/payment/wallethistory/id/lpjkhy",
+          data: {
+            "user": FirebaseAuth.instance.currentUser!.uid.toString(),
+            "status": "completed",
+            "requestId": paymentid,
+            "senderName": userData.name,
+            "paymentCreated": time.toString(),
+            "processedOn": time.toString(),
+            "amount": amount.text
+          });
+      print(responsehttp.data);
+      print(responsehttp.statusCode);
     } catch (e) {
       print(e);
     }
   }
 
   Future updateCurrentBalance(BuildContext context) async {
-    var currentAmount = Provider.of<GetCurrentBalance>(context, listen: false).amount;
+    var currentAmount =
+        Provider.of<GetCurrentBalance>(context, listen: false).amount;
     num updatedBalance = num.parse(amount.text) + currentAmount;
     Response response;
     var dio = Dio();
     var currentuid = FirebaseAuth.instance.currentUser!.uid.toString();
     try {
-      response = await dio.patch("http://34.93.18.143/walletBalance/user/updated/$currentuid", data: {
-        "amount": updatedBalance
-      });
+      response = await dio.patch(
+          "http://34.93.18.143/walletBalance/user/updated/$currentuid",
+          data: {"amount": updatedBalance});
     } catch (e) {
       print(e);
     }

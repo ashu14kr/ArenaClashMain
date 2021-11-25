@@ -3,6 +3,7 @@ import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/footballCh
 import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/footballChallenge/live_challenges.dart';
 import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/footballChallenge/my_challenges.dart';
 import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/footballChallenge/ongoing_challenges.dart';
+import 'package:arenaclash/Services/walletApi/get_current_balance.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +17,13 @@ class FootballScreen extends StatefulWidget {
 
 class _FootballScreenState extends State<FootballScreen> {
   ConstantColors constantColors = ConstantColors();
+
+  @override
+  void initState() {
+    var userbalance = Provider.of<GetCurrentBalance>(context, listen: false).getCurrentBalance();
+    userbalance;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

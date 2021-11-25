@@ -12,7 +12,12 @@ class PostCricketContest with ChangeNotifier {
     Response response;
     var dio = Dio();
     var tdata = Provider.of<CricketHelper>(context, listen: false);
-    num winamount = num.parse(tdata.totalCoins.text) * 1.8.round();
+    DateTime now = DateTime.now();
+    String time = now.month.toString()+ ","+now.day.toString()+","+  now.year.toString() + " "+ now.hour.toString() + ":" + now.minute.toString();
+    num winamount = num.parse(tdata.totalCoins.text);
+    double winningamount = winamount * 1.8;
+    String formatted = winningamount.toStringAsFixed(2);
+    double formattedDouble = double.parse(formatted);
     var currentUid = FirebaseAuth.instance.currentUser!.uid;
     var userData = Provider.of<GetUserData>(context, listen: false);
     var location = Provider.of<GetCurrentLocation>(context, listen: false);
@@ -21,20 +26,20 @@ class PostCricketContest with ChangeNotifier {
           "http://34.93.18.143/user/created/tournament/cricket/lljjsugsv",
           data: {
             "status": "live",
-            "matchType": "dual",
+            "matchType": "Team",
             "totalOvers": tdata.totalOvers.text.toString(),
             "betCoins": tdata.totalCoins.text,
-            "winningCoins": winamount,
+            "winningCoins": formattedDouble.toString(),
             "whoWon": "",
             "whoLose": "",
             "userlat": location.contestCreaterlat,
             "userlng": location.contestCreaterlng,
             "userUidWhoCreated": currentUid.toString(),
             "userUidWhoAccepted": "jdhudehue",
-            "userWhoCreatedLocation": "kskkssoqo",
+            "userWhoCreatedLocation": tdata.totalPlayers.text.toString(),
             "userWhoCreatedContactDetail": userData.phone.toString(),
-            "contestCreatedDate": "",
-            "createrName": "",
+            "contestCreatedDate": time.toString(),
+            "createrName": userData.name.toString(),
             "acceperName": "oyo"
           });
           print(response.data);

@@ -1,5 +1,6 @@
 import 'package:arenaclash/Services/tournamentApi/get_finished_contest.dart';
 import 'package:arenaclash/modals/badminton_by_accepted.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -63,7 +64,8 @@ class _BadmintonMyChallengesState extends State<BadmintonMyChallenges> {
                                 Column(
                                   children: const [
                                     CircleAvatar(
-                                      backgroundColor: Colors.blue,
+                                      backgroundColor: Colors.red,
+                                      child: Icon(EvaIcons.personOutline),
                                     ),
                                     Text("Arena Clash",
                                         style: TextStyle(fontSize: 10))
@@ -77,7 +79,7 @@ class _BadmintonMyChallengesState extends State<BadmintonMyChallenges> {
                                     const SizedBox(height: 5),
                                     const Text("has challenged for"),
                                     const SizedBox(height: 4),
-                                    Text("${data.betCoins.toString()}.0 Coins",
+                                    Text("${data.betCoins.toString()} Coins",
                                         style: const TextStyle(
                                             color: Colors.green, fontSize: 15)),
                                   ],
@@ -85,7 +87,8 @@ class _BadmintonMyChallengesState extends State<BadmintonMyChallenges> {
                                 Column(
                                   children: const [
                                     CircleAvatar(
-                                      backgroundColor: Colors.blue,
+                                      backgroundColor: Colors.red,
+                                      child: Icon(EvaIcons.personOutline),
                                     ),
                                     Text("Arena Clash",
                                         style: TextStyle(fontSize: 10))
@@ -117,7 +120,7 @@ class _BadmintonMyChallengesState extends State<BadmintonMyChallenges> {
                                     children: [
                                       const Text("Winning:",
                                           style: TextStyle(color: Colors.grey)),
-                                      Text(data.winningCoins.toString()+".00",
+                                      Text(data.winningCoins.toString(),
                                           style: const TextStyle(color: Colors.green))
                                     ],
                                   ),

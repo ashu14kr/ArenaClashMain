@@ -1,5 +1,6 @@
 import 'package:arenaclash/Constantcolors.dart';
 import 'package:arenaclash/Screens/walletScreen/wallet_screen.dart';
+import 'package:arenaclash/Services/userApi/get_user_data.dart';
 import 'package:arenaclash/Services/walletApi/get_current_balance.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,6 +20,7 @@ class _WithdrawalFormState extends State<WithdrawalForm> {
   ConstantColors constantColors = ConstantColors();
   TextEditingController withAmount = TextEditingController();
   TextEditingController withUserNumber = TextEditingController();
+  bool paytmNumber = false;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +58,7 @@ class _WithdrawalFormState extends State<WithdrawalForm> {
                           borderRadius: BorderRadius.circular(6)),
                       child: const Center(
                           child: Text(
-                        "Minimum withdrawal amount: 10",
+                        "Minimum withdrawal amount: 100",
                         style: TextStyle(color: Colors.grey),
                       )),
                     ),
@@ -185,11 +187,11 @@ class _WithdrawalFormState extends State<WithdrawalForm> {
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: const [
-                      Text("Deposit amount:",
+                    children: [
+                      const Text("Withdrawal amount:",
                           style: TextStyle(color: Colors.grey)),
-                      Text("amount.text",
-                          style: TextStyle(color: Colors.white)),
+                      Text(withAmount.text.toString(),
+                          style: const TextStyle(color: Colors.white)),
                     ],
                   ),
                   const Divider(
@@ -211,14 +213,18 @@ class _WithdrawalFormState extends State<WithdrawalForm> {
                 ],
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 80),
             FloatingActionButton.extended(
               onPressed: () {
                 var currentAmount =
                     Provider.of<GetCurrentBalance>(context, listen: false)
                         .amount;
                 num amount = num.parse(withAmount.text);
-                if (currentAmount >= amount) {
+                withUserNumber.text.isNotEmpty ? paytmNumber = true : paytmNumber = false;
+                if (paytmNumber == true) {
+                  if (amount >= 100) {
+                  if (currentAmount >= amount) {
+                  currentAmount;
                   updateCurrentBalance(context)
                       .whenComplete(() => {
                             postWithdrawalData(context),
@@ -247,6 +253,24 @@ class _WithdrawalFormState extends State<WithdrawalForm> {
                                     type: PageTransitionType.leftToRight))
                           });
                 }
+                }else{
+                  Fluttertoast.showToast(
+                          msg: "Minimum withdrawal amount: 100",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIosWeb: 3,
+                          textColor: Colors.white,
+                          fontSize: 16.0);
+                }
+                }else{
+                  Fluttertoast.showToast(
+                          msg: "Add paytm Number",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIosWeb: 3,
+                          textColor: Colors.white,
+                          fontSize: 16.0);
+                }
               },
               label: const Text("CONFIRM"),
               backgroundColor: Colors.green,
@@ -259,6 +283,9 @@ class _WithdrawalFormState extends State<WithdrawalForm> {
 
   Future postTransactionHistory(BuildContext context) async {
     Response responsehttp;
+    var userData = Provider.of<GetUserData>(context, listen: false);
+    DateTime now = DateTime.now();
+    String time = now.month.toString()+ "."+now.day.toString()+","+  now.year.toString() + " "+ now.hour.toString() + ":" + now.minute.toString();
     var dio = Dio();
     try {
       responsehttp = await dio.post(
@@ -267,8 +294,8 @@ class _WithdrawalFormState extends State<WithdrawalForm> {
             "user": FirebaseAuth.instance.currentUser!.uid.toString(),
             "status": "pending",
             "requestId": "",
-            "senderName": "Ashutosh Kumar",
-            "paymentCreated": "",
+            "senderName":userData.name,
+            "paymentCreated": time.toString(),
             "processedOn": "",
             "amount": withAmount.text
           });
@@ -298,6 +325,9 @@ class _WithdrawalFormState extends State<WithdrawalForm> {
   Future postWithdrawalData(BuildContext context) async {
     Response response;
     var dio = Dio();
+    var userData = Provider.of<GetUserData>(context, listen: false);
+    DateTime now = DateTime.now();
+    String time = now.month.toString()+ "."+now.day.toString()+","+  now.year.toString() + " "+ now.hour.toString() + ":" + now.minute.toString();
     try {
       response = await dio.post(
           "http://34.93.18.143/user/created/withdrawal/cmp/data/lljjshhgyugsv",
@@ -305,7 +335,7 @@ class _WithdrawalFormState extends State<WithdrawalForm> {
             "status": "pending",
             "userUid": FirebaseAuth.instance.currentUser!.uid.toString(),
             "amount": withAmount.text,
-            "createddate": "",
+            "createddate": time.toString(),
             "requestedId": "",
             "paymentMethod": "paytm",
             "completedDate": "",

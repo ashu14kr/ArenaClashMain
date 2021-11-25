@@ -30,7 +30,8 @@ class _BadmintonLiveChallengesState extends State<BadmintonLiveChallenges> {
 
   @override
   void initState() {
-    Provider.of<GetCurrentLocation>(context, listen: false).getUserLocation(context);
+    Provider.of<GetCurrentLocation>(context, listen: false)
+        .getUserLocation(context);
     _loading = true;
     Provider.of<GetLiveContest>(context, listen: false)
         .getcontestwithlive()
@@ -58,7 +59,7 @@ class _BadmintonLiveChallengesState extends State<BadmintonLiveChallenges> {
     Size size = MediaQuery.of(context).size;
     var location = Provider.of<GetCurrentLocation>(context, listen: false);
     return _loading == true
-        ? const Text("Loading...")
+        ? const Center(child: CircularProgressIndicator())
         : Scaffold(
             backgroundColor: Colors.transparent,
             body: SizedBox(
@@ -99,7 +100,9 @@ class _BadmintonLiveChallengesState extends State<BadmintonLiveChallenges> {
                                           Column(
                                             children: const [
                                               CircleAvatar(
-                                                backgroundColor: Colors.blue,
+                                                backgroundColor: Colors.red,
+                                                child: Icon(
+                                                    EvaIcons.personOutline),
                                               ),
                                               Text("Arena Clash",
                                                   style:
@@ -122,7 +125,7 @@ class _BadmintonLiveChallengesState extends State<BadmintonLiveChallenges> {
                                               Text(
                                                   badmintonContestData.betCoins
                                                           .toString() +
-                                                      ".0 Coins",
+                                                      " Coins",
                                                   style: const TextStyle(
                                                       color: Colors.green,
                                                       fontSize: 15)),
@@ -131,7 +134,9 @@ class _BadmintonLiveChallengesState extends State<BadmintonLiveChallenges> {
                                           Column(
                                             children: const [
                                               CircleAvatar(
-                                                backgroundColor: Colors.blue,
+                                                backgroundColor: Colors.red,
+                                                child: Icon(
+                                                    EvaIcons.personOutline),
                                               ),
                                               Text("Waiting...",
                                                   style:
@@ -171,9 +176,8 @@ class _BadmintonLiveChallengesState extends State<BadmintonLiveChallenges> {
                                                         color: Colors.grey)),
                                                 Text(
                                                     badmintonContestData
-                                                            .winningCoins
-                                                            .toString() +
-                                                        ".00",
+                                                        .winningCoins
+                                                        .toString(),
                                                     style: const TextStyle(
                                                         color: Colors.green))
                                               ],
@@ -347,7 +351,7 @@ class _BadmintonLiveChallengesState extends State<BadmintonLiveChallenges> {
                                                                       badmintonContestData
                                                                               .winningCoins
                                                                               .toString() +
-                                                                          '.00 coins',
+                                                                          ' coins',
                                                                       style: const TextStyle(
                                                                           color:
                                                                               Colors.white))
@@ -385,7 +389,7 @@ class _BadmintonLiveChallengesState extends State<BadmintonLiveChallenges> {
                                                                           color:
                                                                               Colors.grey)),
                                                                   Text(
-                                                                      'Arena Clash',
+                                                                      "Arena Clash",
                                                                       style: TextStyle(
                                                                           color:
                                                                               Colors.white))
@@ -418,14 +422,15 @@ class _BadmintonLiveChallengesState extends State<BadmintonLiveChallenges> {
                                                                         .spaceBetween,
                                                                 children: [
                                                                   const Text(
-                                                                      'Contact Details',
+                                                                      'Match Winning Point',
                                                                       style: TextStyle(
                                                                           color:
                                                                               Colors.grey)),
                                                                   Text(
                                                                       badmintonContestData
-                                                                          .userWhoCreatedContactDetail
-                                                                          .toString(),
+                                                                              .totalPoints
+                                                                              .toString() +
+                                                                          " points",
                                                                       style: const TextStyle(
                                                                           color:
                                                                               Colors.white))
@@ -456,15 +461,17 @@ class _BadmintonLiveChallengesState extends State<BadmintonLiveChallenges> {
                                                                 mainAxisAlignment:
                                                                     MainAxisAlignment
                                                                         .spaceBetween,
-                                                                children: const [
-                                                                  Text(
+                                                                children: [
+                                                                  const Text(
                                                                       'Contest Created',
                                                                       style: TextStyle(
                                                                           color:
                                                                               Colors.grey)),
                                                                   Text(
-                                                                      'Oct 30,2021 9:15 PM',
-                                                                      style: TextStyle(
+                                                                      badmintonContestData
+                                                                          .contestCreatedDate
+                                                                          .toString(),
+                                                                      style: const TextStyle(
                                                                           color:
                                                                               Colors.white))
                                                                 ],

@@ -10,8 +10,13 @@ class PostBadmintonContest with ChangeNotifier {
   Future postdualteamtournament(BuildContext context) async {
     Response response;
     var dio = Dio();
+    DateTime now = DateTime.now();
+    String time = now.month.toString()+ ","+now.day.toString()+","+  now.year.toString() + " "+ now.hour.toString() + ":" + now.minute.toString();
     var tdata = Provider.of<BadmintonHelper>(context, listen: false);
-    num winamount = num.parse(tdata.dualcoins.text) * 1.9.round();
+    num winamount = num.parse(tdata.dualcoins.text);
+    double winningamount = winamount * 1.8;
+    String formatted = winningamount.toStringAsFixed(2);
+    double formattedDouble = double.parse(formatted);
     var currentUid = FirebaseAuth.instance.currentUser!.uid;
     var userData = Provider.of<GetUserData>(context, listen: false);
     var location = Provider.of<GetCurrentLocation>(context, listen: false);
@@ -23,7 +28,7 @@ class PostBadmintonContest with ChangeNotifier {
             "matchType": "dual",
             "totalPoints": tdata.dualPoint.text.toString(),
             "betCoins": tdata.dualcoins.text,
-            "winningCoins": winamount,
+            "winningCoins": formattedDouble.toString(),
             "whoWon": "",
             "whoLose": "",
             "userlat": location.contestCreaterlat,
@@ -32,8 +37,8 @@ class PostBadmintonContest with ChangeNotifier {
             "userUidWhoAccepted": "jdhudehue",
             "userWhoCreatedLocation": "kskkssoqo",
             "userWhoCreatedContactDetail": userData.phone.toString(),
-            "contestCreatedDate": "",
-            "createrName": "",
+            "contestCreatedDate": time.toString(),
+            "createrName": userData.name.toString(),
             "acceperName": "oyo"
           });
           print(response.data);
