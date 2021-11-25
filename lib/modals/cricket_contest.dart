@@ -34,8 +34,8 @@ class CricketContestData {
     String status;
     String matchType;
     String totalOvers;
-    int betCoins;
-    int winningCoins;
+    double betCoins;
+    double winningCoins;
     String whoWon;
     String whoLose;
     double userlat;
@@ -54,8 +54,8 @@ class CricketContestData {
         status: json["status"],
         matchType: json["matchType"],
         totalOvers: json["totalOvers"],
-        betCoins: json["betCoins"],
-        winningCoins: json["winningCoins"],
+        betCoins: json["betCoins"].toDouble(),
+        winningCoins: json["winningCoins"].toDouble(),
         whoWon: json["whoWon"],
         whoLose: json["whoLose"],
         userlat: json["userlat"].toDouble(),

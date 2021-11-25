@@ -15,6 +15,8 @@ import 'package:provider/provider.dart';
 class BadmintonHelper with ChangeNotifier {
   TextEditingController dualPoint = TextEditingController();
   TextEditingController dualcoins = TextEditingController();
+  bool point = false;
+  bool coins =false;
   var betcoin;
   Widget upperContainer(BuildContext context) {
     return Padding(
@@ -116,6 +118,7 @@ class BadmintonHelper with ChangeNotifier {
                           style: TextStyle(color: Colors.white)),
                       IconButton(
                           onPressed: () {
+                            alertBox(context);
                             // teamVsTeamChallenges(context);
                           },
                           icon: const Icon(EvaIcons.checkmarkCircle,
@@ -224,6 +227,8 @@ class BadmintonHelper with ChangeNotifier {
                   const SizedBox(height: 20),
                   InkWell(
                     onTap: () {
+                      dualPoint.text.isNotEmpty ? point = true : point = false;
+                      dualcoins.text.isNotEmpty ? coins = true : coins = false;
                       Provider.of<GetCurrentLocation>(context, listen: false).getUserLocation(context);
                       Provider.of<GetCurrentBalance>(context, listen: false)
                           .getCurrentBalance();
@@ -231,7 +236,8 @@ class BadmintonHelper with ChangeNotifier {
                           .getUserData()
                           .whenComplete(() => {
                                 betcoin = num.parse(dualcoins.text),
-                                if (currentBalance.amount >= betcoin)
+                                if (point == true && coins == true) {
+                                  if (currentBalance.amount >= betcoin)
                                   {
                                     Provider.of<PostBadmintonContest>(context,
                                             listen: false)
@@ -276,6 +282,16 @@ class BadmintonHelper with ChangeNotifier {
                                                   dualcoins.clear(),
                                                 })
                                   }
+                                }else{
+                                  Fluttertoast.showToast(
+                                        msg:
+                                            "Fill all columns",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.BOTTOM,
+                                        timeInSecForIosWeb: 3,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0)
+                                }
                               });
                     },
                     child: Container(
@@ -731,6 +747,17 @@ class BadmintonHelper with ChangeNotifier {
                 ),
               ],
             ),
+          );
+        });
+  }
+
+  Future alertBox(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return  const AlertDialog(
+            title: Text("Badminton Challenge"),
+            content: Text("Single Player Badminton challenge is not available yet."),
           );
         });
   }

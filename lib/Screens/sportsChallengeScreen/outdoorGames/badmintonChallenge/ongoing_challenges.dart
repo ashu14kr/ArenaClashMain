@@ -3,6 +3,7 @@ import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/badmintonC
 import 'package:arenaclash/Services/tournamentApi/get_ongoing_contest.dart';
 import 'package:arenaclash/modals/badminton_by_accepted.dart';
 import 'package:dio/dio.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -142,7 +143,7 @@ class _BadmintonOngoingChallengesState
                                           Text(
                                               whoAccepted.winningCoins
                                                       .toString() +
-                                                  '.00 coins',
+                                                  ' coins',
                                               style: const TextStyle(
                                                   color: Colors.white))
                                         ],
@@ -219,12 +220,12 @@ class _BadmintonOngoingChallengesState
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
-                                        children: const [
-                                          Text('Contest Created',
+                                        children: [
+                                          const Text('Contest Created',
                                               style: TextStyle(
                                                   color: Colors.grey)),
-                                          Text('Oct 30,2021 9:15 PM',
-                                              style: TextStyle(
+                                          Text(whoAccepted.contestCreatedDate.toString(),
+                                              style: const TextStyle(
                                                   color: Colors.white))
                                         ],
                                       ),
@@ -385,7 +386,8 @@ class _BadmintonOngoingChallengesState
                                   Column(
                                     children: const [
                                       CircleAvatar(
-                                        backgroundColor: Colors.blue,
+                                        backgroundColor: Colors.red,
+                                        child: Icon(EvaIcons.personOutline),
                                       ),
                                       Text("Arena Clash",
                                           style: TextStyle(fontSize: 10))
@@ -403,7 +405,7 @@ class _BadmintonOngoingChallengesState
                                       const SizedBox(height: 4),
                                       Text(
                                           whoAccepted.betCoins.toString() +
-                                              ".0 Coins",
+                                              " Coins",
                                           style: const TextStyle(
                                               color: Colors.green,
                                               fontSize: 15)),
@@ -412,7 +414,8 @@ class _BadmintonOngoingChallengesState
                                   Column(
                                     children: const [
                                       CircleAvatar(
-                                        backgroundColor: Colors.blue,
+                                        backgroundColor: Colors.red,
+                                        child: Icon(EvaIcons.personOutline),
                                       ),
                                       Text("Arena Clash",
                                           style: TextStyle(fontSize: 10))
@@ -447,8 +450,7 @@ class _BadmintonOngoingChallengesState
                                                 TextStyle(color: Colors.grey)),
                                         Text(
                                             whoAccepted.winningCoins
-                                                    .toString() +
-                                                ".00",
+                                                    .toString(),
                                             style: const TextStyle(
                                                 color: Colors.green))
                                       ],

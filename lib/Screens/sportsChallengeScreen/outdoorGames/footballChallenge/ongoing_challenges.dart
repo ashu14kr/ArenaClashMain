@@ -3,6 +3,7 @@ import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/footballCh
 import 'package:arenaclash/Services/footballcontestApi/get_ongoing_contest.dart';
 import 'package:arenaclash/modals/football_contest.dart';
 import 'package:dio/dio.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -140,7 +141,7 @@ List<FootballContestData>? _data;
                                           Text(
                                               whoAccepted.winningCoins
                                                       .toString() +
-                                                  '.00 coins',
+                                                  ' coins',
                                               style: const TextStyle(
                                                   color: Colors.white))
                                         ],
@@ -162,12 +163,12 @@ List<FootballContestData>? _data;
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
-                                        children: const [
-                                          Text('Created By',
+                                        children: [
+                                          const Text('Created By',
                                               style: TextStyle(
                                                   color: Colors.grey)),
-                                          Text('Arena Clash',
-                                              style: TextStyle(
+                                          Text(whoAccepted.createrName,
+                                              style: const TextStyle(
                                                   color: Colors.white))
                                         ],
                                       ),
@@ -217,12 +218,12 @@ List<FootballContestData>? _data;
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
-                                        children: const [
-                                          Text('Contest Created',
+                                        children: [
+                                          const Text('Contest Created',
                                               style: TextStyle(
                                                   color: Colors.grey)),
-                                          Text('Oct 30,2021 9:15 PM',
-                                              style: TextStyle(
+                                          Text(whoAccepted.contestCreatedDate,
+                                              style: const TextStyle(
                                                   color: Colors.white))
                                         ],
                                       ),
@@ -295,7 +296,7 @@ List<FootballContestData>? _data;
                                                 response = await dio.patch(
                                                     "http://34.93.18.143/football/contest/user/info/status/$id",
                                                     data: {
-                                                      "status": "finished",
+                                                      "status": "ongoing",
                                                       "whoLose": FirebaseAuth
                                                           .instance
                                                           .currentUser!
@@ -383,7 +384,8 @@ List<FootballContestData>? _data;
                                   Column(
                                     children: const [
                                       CircleAvatar(
-                                        backgroundColor: Colors.blue,
+                                        backgroundColor: Colors.red,
+                                        child: Icon(EvaIcons.personOutline),
                                       ),
                                       Text("Arena Clash",
                                           style: TextStyle(fontSize: 10))
@@ -392,7 +394,7 @@ List<FootballContestData>? _data;
                                   Column(
                                     children: [
                                       Text(
-                                          "BADMINTON_" +
+                                          "FOOTBALL_" +
                                               whoAccepted.matchType.toString(),
                                           style: const TextStyle(
                                               color: Colors.red, fontSize: 12)),
@@ -401,7 +403,7 @@ List<FootballContestData>? _data;
                                       const SizedBox(height: 4),
                                       Text(
                                           whoAccepted.betCoins.toString() +
-                                              ".0 Coins",
+                                              " Coins",
                                           style: const TextStyle(
                                               color: Colors.green,
                                               fontSize: 15)),
@@ -410,7 +412,8 @@ List<FootballContestData>? _data;
                                   Column(
                                     children: const [
                                       CircleAvatar(
-                                        backgroundColor: Colors.blue,
+                                        backgroundColor: Colors.red,
+                                        child: Icon(EvaIcons.personOutline),
                                       ),
                                       Text("Arena Clash",
                                           style: TextStyle(fontSize: 10))
@@ -445,8 +448,7 @@ List<FootballContestData>? _data;
                                                 TextStyle(color: Colors.grey)),
                                         Text(
                                             whoAccepted.winningCoins
-                                                    .toString() +
-                                                ".00",
+                                                    .toString(),
                                             style: const TextStyle(
                                                 color: Colors.green))
                                       ],

@@ -32,8 +32,8 @@ class BadmintonContestData {
     String status;
     String matchType;
     String totalPoints;
-    int betCoins;
-    int winningCoins;
+    double betCoins;
+    double winningCoins;
     String whoWon;
     String whoLose;
     double userlat;
@@ -50,8 +50,8 @@ class BadmintonContestData {
         status: json["status"],
         matchType: json["matchType"],
         totalPoints: json["totalPoints"],
-        betCoins: json["betCoins"],
-        winningCoins: json["winningCoins"],
+        betCoins: json["betCoins"].toDouble(),
+        winningCoins: json["winningCoins"].toDouble(),
         whoWon: json["whoWon"],
         whoLose: json["whoLose"],
         userlat: json["userlat"].toDouble(),

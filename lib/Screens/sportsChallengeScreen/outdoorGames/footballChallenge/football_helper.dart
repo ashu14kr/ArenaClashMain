@@ -17,6 +17,9 @@ class FootballHelper with ChangeNotifier {
   TextEditingController totalGoals = TextEditingController();
   TextEditingController totalPlayers = TextEditingController();
   TextEditingController totalCoins = TextEditingController();
+  bool goal = false;
+  bool players = false;
+  bool coins = false;
   var betcoin;
   Widget upperContainer(BuildContext context) {
     return Padding(
@@ -118,7 +121,8 @@ class FootballHelper with ChangeNotifier {
                           style: TextStyle(color: Colors.white)),
                       IconButton(
                           onPressed: () {
-                            oneOnOneChallenge(context);
+                            alertBox(context);
+                            // oneOnOneChallenge(context);
                           },
                           icon: const Icon(EvaIcons.checkmarkCircle,
                               color: Colors.red))
@@ -241,7 +245,7 @@ class FootballHelper with ChangeNotifier {
   Future teamVsTeamChallenges(BuildContext context) {
     ConstantColors constantColors = ConstantColors();
     var currentBalance = Provider.of<GetCurrentBalance>(context, listen: false);
-    var updateBalance = Provider.of<UpdateBalance>(context, listen: false); 
+    var updateBalance = Provider.of<UpdateBalance>(context, listen: false);
     return showModalBottomSheet(
         context: context,
         backgroundColor: Colors.transparent,
@@ -288,7 +292,7 @@ class FootballHelper with ChangeNotifier {
                       style: const TextStyle(color: Colors.white),
                       controller: totalGoals,
                       decoration: const InputDecoration(
-                          hintText: "Total Goals",
+                          hintText: "Total Time In Match",
                           prefixIcon:
                               Icon(Icons.sports_football, color: Colors.white),
                           focusedBorder: UnderlineInputBorder(
@@ -358,14 +362,20 @@ class FootballHelper with ChangeNotifier {
                   const SizedBox(height: 20),
                   InkWell(
                     onTap: () {
-                      Provider.of<GetCurrentLocation>(context, listen: false).getUserLocation(context);
+                      totalGoals.text.isNotEmpty ? goal = true : goal = false;
+                      totalPlayers.text.isNotEmpty ? players = true : players = false;
+                      totalCoins.text.isNotEmpty? coins = true : coins = false;
+                      Provider.of<GetCurrentLocation>(context, listen: false)
+                          .getUserLocation(context);
                       Provider.of<GetCurrentBalance>(context, listen: false)
                           .getCurrentBalance();
                       Provider.of<GetUserData>(context, listen: false)
                           .getUserData()
                           .whenComplete(() => {
                                 betcoin = num.parse(totalCoins.text),
-                                if (currentBalance.amount >= betcoin){
+                                if (goal == true && players == true && coins ==true) {
+                                  if (currentBalance.amount >= betcoin)
+                                  {
                                     Provider.of<PostFootballContest>(context,
                                             listen: false)
                                         .postdualteamtournament(context),
@@ -414,6 +424,16 @@ class FootballHelper with ChangeNotifier {
                                               totalPlayers.clear(),
                                             })
                                   }
+                                }else{
+                                  Fluttertoast.showToast(
+                                        msg:
+                                            "Fill all columns",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.BOTTOM,
+                                        timeInSecForIosWeb: 3,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0)
+                                }
                               });
                     },
                     child: Container(
@@ -738,6 +758,17 @@ class FootballHelper with ChangeNotifier {
                 ),
               ],
             ),
+          );
+        });
+  }
+
+  Future alertBox(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return  const AlertDialog(
+            title: Text("Football Challenge"),
+            content: Text("Single Player Football challenge is not available yet."),
           );
         });
   }

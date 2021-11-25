@@ -9,9 +9,14 @@ import 'package:provider/provider.dart';
 class PostFootballContest with ChangeNotifier {
   Future postdualteamtournament(BuildContext context) async {
     Response response;
+    DateTime now = DateTime.now();
+    String time = now.month.toString()+ ","+now.day.toString()+","+  now.year.toString() + " "+ now.hour.toString() + ":" + now.minute.toString();
     var dio = Dio();
     var tdata = Provider.of<FootballHelper>(context, listen: false);
-    num winamount = num.parse(tdata.totalCoins.text) * 1.8.round();
+    num winamount = num.parse(tdata.totalCoins.text);
+    double winningamount = winamount * 1.8;
+    String formatted = winningamount.toStringAsFixed(2);
+    double formattedDouble = double.parse(formatted);
     var currentUid = FirebaseAuth.instance.currentUser!.uid;
     var userData = Provider.of<GetUserData>(context, listen: false);
     var location = Provider.of<GetCurrentLocation>(context, listen: false);
@@ -20,20 +25,20 @@ class PostFootballContest with ChangeNotifier {
           "http://34.93.18.143/user/created/tournament/football/lljjsugsv",
           data: {
             "status": "live",
-            "matchType": "dual",
+            "matchType": "Team",
             "totalGoals": tdata.totalGoals.text.toString(),
-            "betCoins": tdata.totalCoins.text,
-            "winningCoins": winamount,
+            "betCoins": tdata.totalCoins.text.toString(),
+            "winningCoins": formattedDouble.toString(),
             "whoWon": "",
             "whoLose": "",
             "userlat": location.contestCreaterlat,
             "userlng": location.contestCreaterlng,
             "userUidWhoCreated": currentUid.toString(),
             "userUidWhoAccepted": "jdhudehue",
-            "userWhoCreatedLocation": "kskkssoqo",
+            "userWhoCreatedLocation": tdata.totalPlayers.text.toString(),
             "userWhoCreatedContactDetail": userData.phone.toString(),
-            "contestCreatedDate": "",
-            "createrName": "",
+            "contestCreatedDate": time.toString(),
+            "createrName": userData.name.toString(),
             "acceperName": "oyo"
           });
           print(response.data);

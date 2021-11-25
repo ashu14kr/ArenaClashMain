@@ -1,6 +1,8 @@
 import 'package:arenaclash/Constantcolors.dart';
 import 'package:arenaclash/Screens/homeScreen/online_games.dart';
 import 'package:arenaclash/Screens/homeScreen/outdoorsports.dart';
+import 'package:arenaclash/Services/userApi/get_user_data.dart';
+import 'package:arenaclash/Services/walletApi/get_current_balance.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +23,17 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isDrawerOpen = false;
 
   @override
+  void initState() {
+    var userbalance = Provider.of<GetCurrentBalance>(context, listen: false).getCurrentBalance();
+    var userdata = Provider.of<GetUserData>(context, listen: false).getUserData();
+    userdata;
+    userbalance;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var userbalance = Provider.of<GetCurrentBalance>(context, listen: false).getCurrentBalance();
     return AnimatedContainer(
       transform: Matrix4.translationValues(xoffset, yoffset, 0)
         ..scale(scaleFactor),
@@ -37,6 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         icon: const Icon(EvaIcons.arrowIosBack),
                         onPressed: () {
                           setState(() {
+                            userbalance;
                             xoffset = 0;
                             yoffset = 0;
                             scaleFactor = 1;

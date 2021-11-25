@@ -16,6 +16,9 @@ class CricketHelper with ChangeNotifier {
   TextEditingController totalOvers = TextEditingController();
   TextEditingController totalPlayers = TextEditingController();
   TextEditingController totalCoins = TextEditingController();
+  bool overs = false;
+  bool players = false;
+  bool coins = false;
   var betcoin;
   Widget upperContainer(BuildContext context) {
     return Padding(
@@ -117,7 +120,8 @@ class CricketHelper with ChangeNotifier {
                           style: TextStyle(color: Colors.white)),
                       IconButton(
                           onPressed: () {
-                            oneOnOneChallenge(context);
+                            alertBox(context);
+                            // oneOnOneChallenge(context);
                           },
                           icon: const Icon(EvaIcons.checkmarkCircle,
                               color: Colors.red))
@@ -350,6 +354,9 @@ class CricketHelper with ChangeNotifier {
                   const SizedBox(height: 20),
                   InkWell(
                     onTap: (){
+                      totalOvers.text.isNotEmpty ? overs = true : overs = false;
+                      totalPlayers.text.isNotEmpty ? players = true : players = false;
+                      totalCoins.text.isNotEmpty ? coins = true : coins =false;
                       Provider.of<GetCurrentLocation>(context, listen: false).getUserLocation(context);
                       Provider.of<GetCurrentBalance>(context, listen: false)
                           .getCurrentBalance();
@@ -357,7 +364,8 @@ class CricketHelper with ChangeNotifier {
                           .getUserData()
                           .whenComplete(() => {
                             betcoin = num.parse(totalCoins.text),
-                                if (currentBalance.amount >= betcoin){
+                                if (overs == true && players == true && coins == true) {
+                                  if (currentBalance.amount >= betcoin){
                                     Provider.of<PostCricketContest>(context,
                                             listen: false)
                                         .postdualteamtournament(context),
@@ -406,6 +414,16 @@ class CricketHelper with ChangeNotifier {
                                               totalPlayers.clear(),
                                             })
                                   }
+                                }else{
+                                  Fluttertoast.showToast(
+                                        msg:
+                                            "Fill all columns",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.BOTTOM,
+                                        timeInSecForIosWeb: 3,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0)
+                                }
                           });
                     },
                     child: Container(
@@ -719,6 +737,17 @@ class CricketHelper with ChangeNotifier {
                 ),                
               ],
             ),
+          );
+        });
+  }
+
+  Future alertBox(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return  const AlertDialog(
+            title: Text("Cricket Challenge"),
+            content: Text("Single Player Cricket challenge is not available yet."),
           );
         });
   }

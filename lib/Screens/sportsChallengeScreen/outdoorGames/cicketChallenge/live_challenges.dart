@@ -58,7 +58,7 @@ class _CricketLiveChallengesState extends State<CricketLiveChallenges> {
      Size size = MediaQuery.of(context).size;
     var location = Provider.of<GetCurrentLocation>(context, listen: false);
     return _loading == true
-        ? const Text("Loading...")
+        ? const Center(child: CircularProgressIndicator())
         : Scaffold(
             backgroundColor: Colors.transparent,
             body: SizedBox(
@@ -97,7 +97,8 @@ class _CricketLiveChallengesState extends State<CricketLiveChallenges> {
                                     Column(
                                       children: const [
                                         CircleAvatar(
-                                          backgroundColor: Colors.blue,
+                                          backgroundColor: Colors.red,
+                                          child: Icon(EvaIcons.personOutline),
                                         ),
                                         Text("Arena Clash",
                                             style: TextStyle(fontSize: 10))
@@ -106,7 +107,7 @@ class _CricketLiveChallengesState extends State<CricketLiveChallenges> {
                                     Column(
                                       children: [
                                         Text(
-                                            "BADMINTON_" +
+                                            "CRICKET_" +
                                                 badmintonContestData.matchType
                                                     .toString(),
                                             style: const TextStyle(
@@ -118,7 +119,7 @@ class _CricketLiveChallengesState extends State<CricketLiveChallenges> {
                                         Text(
                                             badmintonContestData.betCoins
                                                     .toString() +
-                                                ".0 Coins",
+                                                " Coins",
                                             style: const TextStyle(
                                                 color: Colors.green,
                                                 fontSize: 15)),
@@ -127,7 +128,8 @@ class _CricketLiveChallengesState extends State<CricketLiveChallenges> {
                                     Column(
                                       children: const [
                                         CircleAvatar(
-                                          backgroundColor: Colors.blue,
+                                          backgroundColor: Colors.red,
+                                          child: Icon(EvaIcons.personOutline),
                                         ),
                                         Text("Waiting...",
                                             style: TextStyle(fontSize: 10))
@@ -163,8 +165,7 @@ class _CricketLiveChallengesState extends State<CricketLiveChallenges> {
                                                   color: Colors.grey)),
                                           Text(
                                               badmintonContestData.winningCoins
-                                                      .toString() +
-                                                  ".00",
+                                                      .toString(),
                                               style: const TextStyle(
                                                   color: Colors.green))
                                         ],
@@ -235,7 +236,7 @@ class _CricketLiveChallengesState extends State<CricketLiveChallenges> {
                                                         ),
                                                       ),
                                                       const SizedBox(
-                                                          height: 25),
+                                                          height: 15),
                                                       Padding(
                                                         padding:
                                                             const EdgeInsets
@@ -328,7 +329,7 @@ class _CricketLiveChallengesState extends State<CricketLiveChallenges> {
                                                                 badmintonContestData
                                                                         .winningCoins
                                                                         .toString() +
-                                                                    '.00 coins',
+                                                                    ' coins',
                                                                 style: const TextStyle(
                                                                     color: Colors
                                                                         .white))
@@ -356,13 +357,13 @@ class _CricketLiveChallengesState extends State<CricketLiveChallenges> {
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
                                                                   .spaceBetween,
-                                                          children: const [
-                                                            Text('Created By',
+                                                          children: [
+                                                            const Text('Created By',
                                                                 style: TextStyle(
                                                                     color: Colors
                                                                         .grey)),
-                                                            Text('Arena Clash',
-                                                                style: TextStyle(
+                                                            Text(badmintonContestData.createrName,
+                                                                style: const TextStyle(
                                                                     color: Colors
                                                                         .white))
                                                           ],
@@ -391,14 +392,14 @@ class _CricketLiveChallengesState extends State<CricketLiveChallenges> {
                                                                   .spaceBetween,
                                                           children: [
                                                             const Text(
-                                                                'Contact Details',
+                                                                'Opponent Total Player',
                                                                 style: TextStyle(
                                                                     color: Colors
                                                                         .grey)),
                                                             Text(
                                                                 badmintonContestData
-                                                                    .userWhoCreatedContactDetail
-                                                                    .toString(),
+                                                                    .userWhoCreatedLocation
+                                                                    .toString() + " players",
                                                                 style: const TextStyle(
                                                                     color: Colors
                                                                         .white))
@@ -426,15 +427,17 @@ class _CricketLiveChallengesState extends State<CricketLiveChallenges> {
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
                                                                   .spaceBetween,
-                                                          children: const [
-                                                            Text(
-                                                                'Contest Created',
+                                                          children: [
+                                                            const Text(
+                                                                'Match Total Duration',
                                                                 style: TextStyle(
                                                                     color: Colors
                                                                         .grey)),
                                                             Text(
-                                                                'Oct 30,2021 9:15 PM',
-                                                                style: TextStyle(
+                                                                badmintonContestData
+                                                                    .totalOvers
+                                                                    .toString() + " overs",
+                                                                style: const TextStyle(
                                                                     color: Colors
                                                                         .white))
                                                           ],
@@ -451,7 +454,42 @@ class _CricketLiveChallengesState extends State<CricketLiveChallenges> {
                                                         ),
                                                       ),
                                                       const SizedBox(
-                                                          height: 30),
+                                                          height: 10),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                horizontal: 15),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            const Text(
+                                                                'Contest Created',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .grey)),
+                                                            Text(
+                                                                badmintonContestData.contestCreatedDate.toString(),
+                                                                style: const TextStyle(
+                                                                    color: Colors
+                                                                        .white))
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      const SizedBox(height: 5),
+                                                      const Padding(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                horizontal: 15),
+                                                        child: Divider(
+                                                          thickness: 0.5,
+                                                          color: Colors.grey,
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 15),
                                                       InkWell(
                                                         onTap: () async {
                                                           Response? response;

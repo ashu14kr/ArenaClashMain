@@ -3,6 +3,7 @@ import 'package:arenaclash/Screens/walletScreen/about_screen.dart';
 import 'package:arenaclash/Screens/walletScreen/actions_screen.dart';
 import 'package:arenaclash/Screens/walletScreen/history_screen.dart';
 import 'package:arenaclash/Screens/walletScreen/wallet_helper.dart';
+import 'package:arenaclash/Services/walletApi/get_current_balance.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +16,13 @@ class WalletScreen extends StatefulWidget {
 
 class _WalletScreenState extends State<WalletScreen> {
   ConstantColors constantColors = ConstantColors();
+
+  @override
+  void initState() {
+    var userbalance = Provider.of<GetCurrentBalance>(context, listen: false).getCurrentBalance();
+    userbalance;
+    super.initState();
+  }
 
 
   @override
