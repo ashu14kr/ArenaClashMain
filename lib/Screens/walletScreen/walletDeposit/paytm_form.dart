@@ -36,7 +36,7 @@ class _PaytmFormState extends State<PaytmForm> {
     var userdata = Provider.of<GetUserData>(context, listen: false);
     int amounttopay = int.parse(amount.text) * 100;
     var options = {
-      'key': 'rzp_live_c3FoRoxuKhNdXk',
+      'key': 'rzp_test_lms2NQqkOHpmua',
       'amount': amounttopay,
       'name': 'Arena clash',
       'description': 'wallet refil',
@@ -241,7 +241,7 @@ class _PaytmFormState extends State<PaytmForm> {
     var dio = Dio();
     var userData = Provider.of<GetUserData>(context, listen: false);
     DateTime now = DateTime.now();
-    String time = now.month.toString()+ "."+now.day.toString()+","+  now.year.toString() + " "+ now.hour.toString() + ":" + now.minute.toString();
+    String time = now.month.toString()+ ","+now.day.toString()+","+  now.year.toString() + " "+ now.hour.toString() + ":" + now.minute.toString();
     try {
       responsehttp = await dio.post(
           "http://34.93.18.143/user/payment/wallethistory/id/lpjkhy",
@@ -252,6 +252,7 @@ class _PaytmFormState extends State<PaytmForm> {
             "senderName": userData.name,
             "paymentCreated": time.toString(),
             "processedOn": time.toString(),
+            "paymentType": "Deposit",
             "amount": amount.text
           });
       print(responsehttp.data);

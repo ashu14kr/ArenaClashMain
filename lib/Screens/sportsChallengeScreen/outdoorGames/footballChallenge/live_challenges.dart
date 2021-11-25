@@ -3,6 +3,7 @@ import 'package:arenaclash/Screens/sportsChallengeScreen/outdoorGames/footballCh
 import 'package:arenaclash/Screens/walletScreen/wallet_screen.dart';
 import 'package:arenaclash/Services/footballcontestApi/get_live_contest.dart';
 import 'package:arenaclash/Services/location/get_location.dart';
+import 'package:arenaclash/Services/userApi/get_user_data.dart';
 import 'package:arenaclash/Services/walletApi/get_current_balance.dart';
 import 'package:arenaclash/modals/football_contest.dart';
 import 'package:dio/dio.dart';
@@ -31,11 +32,13 @@ class _LiveChallengesState extends State<LiveChallenges> {
   @override
   void initState() {
     Provider.of<GetCurrentLocation>(context, listen: false).getUserLocation(context);
+    var userbalance = Provider.of<GetCurrentBalance>(context, listen: false).getCurrentBalance();
     _loading = true;
     Provider.of<GetFootballLiveContest>(context, listen: false)
         .getcontestwithlive()
         .then((status) => {
               setState(() {
+                userbalance;
                 _livestatus = status;
                 _loading = false;
               }),
@@ -75,7 +78,7 @@ class _LiveChallengesState extends State<LiveChallenges> {
                         location.contestCreaterlng,
                         footballContestData.userlat,
                         footballContestData.userlng);
-                    return distance <= 2000 ? Padding(
+                    return distance <= 2000 && footballContestData.userUidWhoCreated != FirebaseAuth.instance.currentUser!.uid ? Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 10),
                       child: Stack(children: [

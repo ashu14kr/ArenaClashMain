@@ -68,15 +68,15 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                 padding:
                                     const EdgeInsets.only(top: 15, left: 10),
                                 child: Row(
-                                  children: const [
+                                  children: [
                                     Icon(
-                                      Icons.check,
-                                      color: Colors.green,
+                                      transactionHistory.status == "pending" ? Icons.error_outline : Icons.check,
+                                      color: transactionHistory.status == "pending" ? Colors.red : Colors.green,
                                       size: 14,
                                     ),
                                     Text(
-                                      ' Deposit',
-                                      style: TextStyle(
+                                      ""+transactionHistory.paymentType.toString(),
+                                      style: const TextStyle(
                                           fontSize: 12, color: Colors.grey),
                                     )
                                   ],
@@ -90,8 +90,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                const Text('30 Sept 2021, 21:15',
-                                    style: TextStyle(
+                                 Text(transactionHistory.paymentCreated.toString(),
+                                    style: const TextStyle(
                                         color: Colors.grey, fontSize: 12)),
                                 const SizedBox(
                                   height: 4,
@@ -150,13 +150,13 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
                                                               .spaceBetween,
-                                                      children: const [
-                                                        Text('Status',
+                                                      children: [
+                                                        const Text('Status',
                                                             style: TextStyle(
                                                                 color: Colors
                                                                     .grey)),
-                                                        Text('Complete',
-                                                            style: TextStyle(
+                                                        Text(transactionHistory.status.toString(),
+                                                            style: const TextStyle(
                                                                 color: Colors
                                                                     .white))
                                                       ],
@@ -249,7 +249,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                                                 color: Colors
                                                                     .grey)),
                                                         Text(
-                                                            'Instant bank transfers',
+                                                            'Arena Clash',
                                                             style: TextStyle(
                                                                 color: Colors
                                                                     .white))
@@ -275,13 +275,13 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
                                                               .spaceBetween,
-                                                      children: const [
-                                                        Text('Sender Name',
+                                                      children: [
+                                                        const Text('Sender Name',
                                                             style: TextStyle(
                                                                 color: Colors
                                                                     .grey)),
-                                                        Text('Ashutosh Kumar',
-                                                            style: TextStyle(
+                                                        Text(transactionHistory.senderName,
+                                                            style: const TextStyle(
                                                                 color: Colors
                                                                     .white))
                                                       ],
@@ -306,46 +306,46 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
                                                               .spaceBetween,
-                                                      children: const [
-                                                        Text('Payment Created',
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .grey)),
-                                                        Text(
-                                                            'Sep 30,2021 9:15 PM',
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white))
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  const SizedBox(height: 5),
-                                                  const Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal: 15),
-                                                    child: Divider(
-                                                      thickness: 0.5,
-                                                      color: Colors.grey,
-                                                    ),
-                                                  ),
-                                                  const SizedBox(height: 10),
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 15),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: const [
-                                                        Text('Processed on',
+                                                      children: [
+                                                        const Text('Payment Created',
                                                             style: TextStyle(
                                                                 color: Colors
                                                                     .grey)),
                                                         Text(
-                                                            'Sep 30,2021 9:15 PM',
+                                                            transactionHistory.paymentCreated.toString(),
+                                                            style: const TextStyle(
+                                                                color: Colors
+                                                                    .white))
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 5),
+                                                  const Padding(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 15),
+                                                    child: Divider(
+                                                      thickness: 0.5,
+                                                      color: Colors.grey,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 10),
+                                                  Padding(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 15),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        const Text('Processed on',
                                                             style: TextStyle(
+                                                                color: Colors
+                                                                    .grey)),
+                                                        Text(
+                                                            transactionHistory.processedOn.toString(),
+                                                            style: const TextStyle(
                                                                 color: Colors
                                                                     .white))
                                                       ],

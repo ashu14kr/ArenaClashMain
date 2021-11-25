@@ -220,56 +220,58 @@ class _WithdrawalFormState extends State<WithdrawalForm> {
                     Provider.of<GetCurrentBalance>(context, listen: false)
                         .amount;
                 num amount = num.parse(withAmount.text);
-                withUserNumber.text.isNotEmpty ? paytmNumber = true : paytmNumber = false;
+                withUserNumber.text.isNotEmpty
+                    ? paytmNumber = true
+                    : paytmNumber = false;
                 if (paytmNumber == true) {
                   if (amount >= 100) {
-                  if (currentAmount >= amount) {
-                  currentAmount;
-                  updateCurrentBalance(context)
-                      .whenComplete(() => {
-                            postWithdrawalData(context),
-                            postTransactionHistory(context),
-                          })
-                      .whenComplete(() => {
-                            Navigator.push(
-                                context,
-                                PageTransition(
-                                    child: const WalletScreen(),
-                                    type: PageTransitionType.leftToRight))
-                          });
+                    if (currentAmount >= amount) {
+                      currentAmount;
+                      updateCurrentBalance(context)
+                          .whenComplete(() => {
+                                postWithdrawalData(context),
+                                postTransactionHistory(context),
+                              })
+                          .whenComplete(() => {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            const WalletScreen()))
+                              });
+                    } else {
+                      Fluttertoast.showToast(
+                              msg: "Balance is insufficient....",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 3,
+                              textColor: Colors.white,
+                              fontSize: 16.0)
+                          .whenComplete(() => {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            const WalletScreen()))
+                              });
+                    }
+                  } else {
+                    Fluttertoast.showToast(
+                        msg: "Minimum withdrawal amount: 100",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 3,
+                        textColor: Colors.white,
+                        fontSize: 16.0);
+                  }
                 } else {
                   Fluttertoast.showToast(
-                          msg: "Balance is insufficient....",
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.BOTTOM,
-                          timeInSecForIosWeb: 3,
-                          textColor: Colors.white,
-                          fontSize: 16.0)
-                      .whenComplete(() => {
-                            Navigator.push(
-                                context,
-                                PageTransition(
-                                    child: const WalletScreen(),
-                                    type: PageTransitionType.leftToRight))
-                          });
-                }
-                }else{
-                  Fluttertoast.showToast(
-                          msg: "Minimum withdrawal amount: 100",
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.BOTTOM,
-                          timeInSecForIosWeb: 3,
-                          textColor: Colors.white,
-                          fontSize: 16.0);
-                }
-                }else{
-                  Fluttertoast.showToast(
-                          msg: "Add paytm Number",
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.BOTTOM,
-                          timeInSecForIosWeb: 3,
-                          textColor: Colors.white,
-                          fontSize: 16.0);
+                      msg: "Add paytm Number",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIosWeb: 3,
+                      textColor: Colors.white,
+                      fontSize: 16.0);
                 }
               },
               label: const Text("CONFIRM"),
@@ -285,7 +287,15 @@ class _WithdrawalFormState extends State<WithdrawalForm> {
     Response responsehttp;
     var userData = Provider.of<GetUserData>(context, listen: false);
     DateTime now = DateTime.now();
-    String time = now.month.toString()+ "."+now.day.toString()+","+  now.year.toString() + " "+ now.hour.toString() + ":" + now.minute.toString();
+    String time = now.month.toString() +
+        "," +
+        now.day.toString() +
+        "," +
+        now.year.toString() +
+        " " +
+        now.hour.toString() +
+        ":" +
+        now.minute.toString();
     var dio = Dio();
     try {
       responsehttp = await dio.post(
@@ -294,9 +304,10 @@ class _WithdrawalFormState extends State<WithdrawalForm> {
             "user": FirebaseAuth.instance.currentUser!.uid.toString(),
             "status": "pending",
             "requestId": "",
-            "senderName":userData.name,
+            "senderName": userData.name,
             "paymentCreated": time.toString(),
             "processedOn": "",
+            "paymentType": "Withdrawal",
             "amount": withAmount.text
           });
       print(responsehttp.data);
@@ -327,7 +338,15 @@ class _WithdrawalFormState extends State<WithdrawalForm> {
     var dio = Dio();
     var userData = Provider.of<GetUserData>(context, listen: false);
     DateTime now = DateTime.now();
-    String time = now.month.toString()+ "."+now.day.toString()+","+  now.year.toString() + " "+ now.hour.toString() + ":" + now.minute.toString();
+    String time = now.month.toString() +
+        "," +
+        now.day.toString() +
+        "," +
+        now.year.toString() +
+        " " +
+        now.hour.toString() +
+        ":" +
+        now.minute.toString();
     try {
       response = await dio.post(
           "http://34.93.18.143/user/created/withdrawal/cmp/data/lljjshhgyugsv",
